@@ -19,46 +19,37 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/spf13/cobra"
 	"github.com/Josh012422/cli/misc"
+	"github.com/spf13/cobra"
 )
 
-// timeCmd represents the time command
+// newCmd represents the new command
 var timeCmd = &cobra.Command{
 	Use:   "time",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "This command displays the REAL TIME of Colombia",
+	Long: `Thid command uses the IANA timezone database, so is the REAL TIME`,
 	Run: func(cmd *cobra.Command, args []string) {
-		var txt = misc.Green("The time is: ")
-		t := time.Now()
-		fmt.Println(t.String())
-		fmt.Println(txt + t.Format("2006-06-02 15:00:00"))
+		tzFlag,_ := cmd.Flags().GetString("timezone")
+		location,_ := time.LoadLocation(tzFlag)
+
+		txt :=misc.Green("The time is: ")
+		t := time.Now().In(location)
+		t.String()
+		fmt.Println(txt +  t.Format("2006-06-02 15:04:05"))
+		//fmt.Println(tzFlag)
 	},
 }
 
-/*func displayTime(cmd *cobra.Command, args []string) {
-	var txt = misc.Green("The time is: ")
-	t := time.Now();
-	fmt.Println(t.String())
-	fmt.Println(txt + t.Format("2020-02-05 15:00:00"))
-}
-*/
 func init() {
 	rootCmd.AddCommand(timeCmd)
 
 	// Here you will define your flags and configuration settings.
-
+	timeCmd.Flags().StringP("timezone", "t", "", "The timezone to obtain the time zone. MUST BE: CONTINENT/CITY. MUST BE string with double quotes")
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// timeCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// newCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// timeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// newCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-

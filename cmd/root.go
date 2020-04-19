@@ -21,7 +21,7 @@ import (
 	"os"
 
 	homedir "github.com/mitchellh/go-homedir"
-	"github.com/Josh012422/cli/misc"
+//	"github.com/Josh012422/cli/misc"
 	"github.com/spf13/viper"
 )
 
@@ -30,13 +30,11 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "cli",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "A multiple utilities cli",
+	Long: `This cli is made to make your life easier, you can use it from terminal, so if your a dev that is so busy to install an utilities app, thén this is for you
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Example: cli time
+	Displays the current time`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//	Run: func(cmd *cobra.Command, args []string) { },
@@ -63,8 +61,6 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	var text =  misc.Green("Hello");
-	fmt.Println(text)
 }
 
 // initConfig reads in config file and ENV variables if set.
