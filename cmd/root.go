@@ -21,6 +21,7 @@ import (
 	"os"
 
 	homedir "github.com/mitchellh/go-homedir"
+	"github.com/Josh012422/cli/misc"
 	"github.com/spf13/viper"
 )
 
@@ -62,6 +63,8 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	var text =  misc.Green("Hello");
+	fmt.Println(text)
 }
 
 // initConfig reads in config file and ENV variables if set.
