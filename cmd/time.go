@@ -106,7 +106,7 @@ var timeCmd = &cobra.Command{
 
 		if (tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == true) {
 			viperLocationRaw := viper.GetString("default")
-			viperLocation := time.LoadLocation(viperLocationRaw)
+			viperLocation,_ := time.LoadLocation(viperLocationRaw)
 
 			t := time.Now().In(viperLocationRaw)
 			t.String()
