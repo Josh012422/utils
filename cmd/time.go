@@ -34,26 +34,27 @@ var timeCmd = &cobra.Command{
 		tzFlag,_ := cmd.Flags().GetString("timezone")
 		hourFormatFlag,_ := cmd.Flags().GetBool("12hour")
 		location,_ := time.LoadLocation(tzFlag)
-		tzFlagEmpty := true
+	//	tzFlagEmpty := true
 		defaultTzFlag,_ := cmd.Flags().GetString("default")
 	//	defaultTz,_ := time.LoadLocation(defaultTzFlag)
-		defaultTzEmpty := true
+	//	defaultTzEmpty := true
 	//	vCfg := viper.New()
-	//	defaultTzValue := viper.GetString("default")
+		defaultTzValue := viper.GetString("default")
+		viperLocation,_ := time.LoadLocation(defaultTzValue)
 	//	defaultTzValueLocation,_ := time.LoadLocation(defaultTzValue)
 
-		if (tzFlag != "" && defaultTzEmpty == true) {
+		/*if (tzFlag != "" && defaultTzEmpty == true) {
 			tzFlagEmpty = false
 		} else {
 		   tzFlagEmpty = true
-		}
+		}*/
 
 		if (defaultTzFlag != "") {
 			viper.AddConfigPath("$HOME/.config.yml")
 			viper.Set("default", defaultTzFlag)
 			viper.WriteConfig()
 			fmt.Println(misc.Cyan("Default Timezone succesfully saved"))
-		}
+		}/*
 
 		if (tzFlagEmpty == true && defaultTzEmpty == false){
 			emptyErrTxt := misc.Red("Error: Please enter a valid timezone")
@@ -73,16 +74,16 @@ var timeCmd = &cobra.Command{
 			fmt.Println(txt + t.Format("2006-06-02 15:04:05 pm"))
 		}
 
-		if (hourFormatFlag == true && defaultTzFlag != "") {
+	/*	if (hourFormatFlag == true && defaultTzFlag != "") {
 			viperLocationRaw := viper.GetString("default")
 			viperLocation,_ := time.LoadLocation(viperLocationRaw)
 			t := time.Now().In(viperLocation)
 			t.String()
 			fmt.Println(txt + t.Format("2006-06-02 3:04:05 pm"))
-		} /*else {
+		} else {
 		    errText := misc.Red("Error: There is no default timezone in config file. Please run --default to save a default timezone")
 		    fmt.Println(errText)
-		}*/
+		}
 
 		if (hourFormatFlag == false && defaultTzFlag != "") {
 			viperLocationRaw := viper.GetString("default")
@@ -90,14 +91,26 @@ var timeCmd = &cobra.Command{
 			t := time.Now().In(viperLocation)
 			t.String()
 			fmt.Println(txt + t.Format("2006-06-02 15:04:05 pm"))
-		} /*else {
+		} else {
 		    errText := misc.Red("Error: There is no default timezone in config file. Please run --default to save a default timezone")
 		    fmt.Println(errText)
 		}*/
 
+		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == false) {
+			t := time.Now().In(location)
+			t.String()
+			fmt.Println(txt + t.Format("2006-06-02 15:04:05 pm"))
+		}
+
+		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == true) {
+			t := time.Now().In(location)
+			t.String()
+			fmt.Println(txt + t.Format("2006-06-02 3:04:05 pm"))
+		}
+
 		if (tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == false) {
-			viperLocationRaw := viper.GetString("default")
-			viperLocation,_ := time.LoadLocation(viperLocationRaw)
+		/*	viperLocationRaw := viper.GetString("default")
+			viperLocation,_ := time.LoadLocation(viperLocationRaw)*/
 
 			t := time.Now().In(viperLocation)
 			t.String()
@@ -105,12 +118,17 @@ var timeCmd = &cobra.Command{
 		}
 
 		if (tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == true) {
-			viperLocationRaw := viper.GetString("default")
-			viperLocation,_ := time.LoadLocation(viperLocationRaw)
+		/*	viperLocationRaw := viper.GetString("default")
+			viperLocation,_ := time.LoadLocation(viperLocationRaw)*/
 
 			t := time.Now().In(viperLocation)
 			t.String()
 			fmt.Println(txt + t.Format("2006-06-02 3:04:05 pm"))
+		}
+
+		if (tzFlag == "" && defaultTzValue == "" && defaultTzFlag == "") {
+			errText := misc.Red("Error: There is no default timezone in config file. Please run --default or -d to save a default timezone")
+			fmt.Println(errText)
 		}
 
 
