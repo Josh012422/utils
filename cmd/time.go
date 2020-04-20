@@ -63,14 +63,14 @@ var timeCmd = &cobra.Command{
 		if (hourFormatFlag == true && defaultTzEmpty == true && tzFlagEmpty == false){
 			t := time.Now().In(location)
 			t.String()
-			fmt.Println(txt +  t.Format("2006-06-02 3:04:05"))
+			fmt.Println(txt +  t.Format("2006-06-02 3:04:05 pm"))
 		}
 
 		if (hourFormatFlag == false && defaultTzEmpty == true && tzFlagEmpty == false) {
 
 			t := time.Now().In(location)
 			t.String()
-			fmt.Println(txt + t.Format("2006-06-02 15:04:05"))
+			fmt.Println(txt + t.Format("2006-06-02 15:04:05 pm"))
 		}
 
 		if (hourFormatFlag == true && defaultTzFlag != "") {
@@ -78,7 +78,7 @@ var timeCmd = &cobra.Command{
 			viperLocation,_ := time.LoadLocation(viperLocationRaw)
 			t := time.Now().In(viperLocation)
 			t.String()
-			fmt.Println(txt + t.Format("2006-06-02 3:04:05pm"))
+			fmt.Println(txt + t.Format("2006-06-02 3:04:05 pm"))
 		} /*else {
 		    errText := misc.Red("Error: There is no default timezone in config file. Please run --default to save a default timezone")
 		    fmt.Println(errText)
@@ -89,7 +89,7 @@ var timeCmd = &cobra.Command{
 			viperLocation,_ := time.LoadLocation(viperLocationRaw)
 			t := time.Now().In(viperLocation)
 			t.String()
-			fmt.Println(txt + t.Format("2006-06-02 15:04:05pm"))
+			fmt.Println(txt + t.Format("2006-06-02 15:04:05 pm"))
 		} /*else {
 		    errText := misc.Red("Error: There is no default timezone in config file. Please run --default to save a default timezone")
 		    fmt.Println(errText)
@@ -108,9 +108,9 @@ var timeCmd = &cobra.Command{
 			viperLocationRaw := viper.GetString("default")
 			viperLocation,_ := time.LoadLocation(viperLocationRaw)
 
-			t := time.Now().In(viperLocationRaw)
+			t := time.Now().In(viperLocation)
 			t.String()
-			fmt.Println(txt + t.Format("2006-06-02 3:04:05"))
+			fmt.Println(txt + t.Format("2006-06-02 3:04:05 pm"))
 		}
 
 
