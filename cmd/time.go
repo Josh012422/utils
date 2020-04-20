@@ -104,6 +104,15 @@ var timeCmd = &cobra.Command{
 			fmt.Println(txt + t.Format("2006-06-02 15:04:05 pm"))
 		}
 
+		if (tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == true) {
+			viperLocationRaw := viper.GetString("default")
+			viperLocation := time.LoadLocation(viperLocationRaw)
+
+			t := time.Now().In(viperLocationRaw)
+			t.String()
+			fmt.Println(txt + t.Format("2006-06-02 3:04:05")
+		}
+
 
 	},
 
