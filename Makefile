@@ -2,6 +2,14 @@ install:
 	@echo "**********Downloading and Installing Dependencies**********"
 	@go get -u github.com/spf13/cobra/cobra
 	@go get -u github.com/mgutz/ansi
-	@echo "**********Installing Cli**********"
+	@go get -u github.com/Josh012422/utils/cmd
+	@go get -u github.com/Josh012422/utils/misc
+	@echo "**********Installing CLI**********"
 	@go install
-	@echo "Done. Now you can run the cli by typing cli [command] or just cli for a help menu"
+	@echo "**********Creating config file**********"
+	@touch ~/.config.yml
+	@echo 'default: ""' >> ~/.config.yml
+	@echo "*****File succesfully created in ~/.config.yml*****"
+	@echo "***Succesfully installed CLI***"
+	@cat .bin.txt
+	@echo "Done. Now you can run the cli by typing utils [command] or just utils for a help menu"

@@ -29,11 +29,11 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "cli",
+	Use:   "utils",
 	Short: "A multiple utilities cli",
 	Long: `This cli is made to make your life easier, you can use it from terminal, so if your a dev that is so busy to install an utilities app, thén this is for you
 
-	Example: cli time
+	Example: utils time -t "Continent/City"
 	Displays the current time`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
@@ -56,7 +56,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cli.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config.yml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -78,13 +78,14 @@ func initConfig() {
 
 		// Search config in home directory with name ".cli" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigName(".cli")
+		viper.SetConfigName(".config")
+		viper.SetConfigType("yml")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
+/*	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
-	}
+	}*/
 }
