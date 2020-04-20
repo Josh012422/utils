@@ -3,7 +3,6 @@ module github.com/Josh012422/utils
 go 1.13
 
 require (
-
 	// fsnotify
 
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
@@ -42,7 +41,7 @@ require (
 	github.com/spf13/viper v1.6.3
 
 	// spf13
-	
+
 	// golang
 
 	golang.org/x/sys v0.0.0-20200420163511-1957bb5e6d1f // indirect

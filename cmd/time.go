@@ -110,7 +110,7 @@ var timeCmd = &cobra.Command{
 
 			t := time.Now().In(viperLocationRaw)
 			t.String()
-			fmt.Println(txt + t.Format("2006-06-02 3:04:05")
+			fmt.Println(txt + t.Format("2006-06-02 3:04:05"))
 		}
 
 
