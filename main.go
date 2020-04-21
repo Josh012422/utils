@@ -16,8 +16,8 @@ limitations under the License.
 package main
 
 import "github.com/Josh012422/utils/cmd"
-// import "github.com/spf13/cobra"
 
 func main() {
 	cmd.Execute()
 }
+

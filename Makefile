@@ -7,9 +7,7 @@ install:
 	@echo "**********Installing CLI**********"
 	@go install
 	@echo "**********Creating config file**********"
-	@touch .config.yml
-	@echo 'default: ""' >> .config.yml
-	@echo "*****File succesfully created in cmd/.config.yml*****"
+	@go run main.go config
 	@echo "***Succesfully installed CLI***"
 	@cat .bin.txt
 	@echo "Done. Now you can run the cli by typing utils [command] or just utils for a help menu"
