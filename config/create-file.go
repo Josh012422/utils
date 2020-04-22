@@ -21,7 +21,12 @@ func createFile (){
 		fmt.Println(misc.Red("Sorry there was an error: "), erro)
 		os.Exit(1)
 	}
-	var _, err = os.Stat(path)
+	var fileExists, err = os.Stat(path)
+
+	if fileExists != nil {
+		fmt.Println(misc.Red("Error: Config file already exists in:"), misc.Yellow(path))
+		os.Exit(0)
+	}
 
 	if os.IsNotExist(err){
 		var file, err = os.Create(path)
