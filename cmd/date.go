@@ -53,7 +53,7 @@ var dateCmd = &cobra.Command{
 		if (tzFlag != "" && defaultTzFlag == "") {
 			t := time.Now().In(location)
 			t.String()
-			fmt.Println(txt + t.Format("2006-06-02"))
+			fmt.Println(txt + t.Format("2006-06-02 Monday January"))
 		}
 
 		if (tzFlag == "" && defaultTzFlag == "") {
@@ -62,7 +62,7 @@ var dateCmd = &cobra.Command{
 
 			t := time.Now().In(viperLocation)
 			t.String()
-			fmt.Println(txt + t.Format("2006-06-02"))
+			fmt.Println(txt + t.Format("2006-06-02 Monday January"))
 		}
 
 

@@ -38,7 +38,7 @@ var timeCmd = &cobra.Command{
 
 		path := home + "/.config.yml"
 		viper.New()
-		txt := misc.Green("The time is: ")
+		txt := misc.Cyan("The time is: ")
 		tzFlag,_ := cmd.Flags().GetString("timezone")
 		hourFormatFlag,_ := cmd.Flags().GetBool("12hour")
 		location,_ := time.LoadLocation(tzFlag)
