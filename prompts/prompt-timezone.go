@@ -12,3 +12,12 @@ func PromptTimezone1 (name string) (string, error) {
 
 	return promptTz1.Run()
 }
+
+func PromptTimezone2 (name string) (string, error) {
+        promptTz2 := promptui.Prompt{
+                Label: name,
+                Validate: ValidateEmptyString,
+        }
+
+        return promptTz2.Run()
+}

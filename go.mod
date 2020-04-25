@@ -6,6 +6,7 @@ require (
 	// fsnotify
 
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/manifoldco/promptui v0.7.0
 
 	// fsnotify
 

@@ -40,5 +40,16 @@ func ConvertTime (tz1 string, tz2 string, hourFormat bool) (string, string, erro
 		os.Exit(0)
 	}
 
+	if hourFormat == false {
+		t1 := time.Now().In(loc1)
+		t1.String()
+
+		t2 := time.Now().In(loc2)
+		t2.String()
+
+		return t1.Format("15:04:05 PM"), t2.Format("15:04:05 PM"), nil
+		os.Exit(0)
+	}
+
 	return "", "", nil
 }

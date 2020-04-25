@@ -18,6 +18,7 @@ package cmd
 import (
 	"fmt"
 	"time"
+	"os"
 
 	"github.com/Josh012422/utils/misc"
 	"github.com/Josh012422/utils/commands"
@@ -95,16 +96,31 @@ var timeCompareCmd = &cobra.Command{
 		tz1, _ := cmd.Flags().GetString("timezone")
 		tz2, _ := cmd.Flags().GetString("2timezone")
 		hff, _ := cmd.Flags().GetBool("12hour")
+		var tzo1, tzo2 string;
+		var err error;
+		var errTz1 error;
+		var errTz2 error;
 
 		if tz1 == "" {
-			prompts.PromptTimezone("Timezone 1: ")
+			tz1, errTz1 = prompts.PromptTimezone1("Timezone 1")
+			tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
+			if errTz1 != nil {
+				fmt.Println(errTz1)
+				os.Exit(1)
+			}
 		}
 
 		if tz2 == "" {
-			prompts.PromptTimezone("Timezone 2: ")
+			tz2, errTz2 = prompts.PromptTimezone2("Timezone 2")
+			tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
+
+			if errTz2 != nil {
+				fmt.Println(errTz2)
+				os.Exit(1)
+			}
 		}
 
-		tzo1, tzo2, err := command.ConvertTime(tz1, tz2, hff)
+		tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
 
 		if err != nil {
 			fmt.Println(err)
