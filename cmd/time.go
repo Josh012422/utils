@@ -21,6 +21,7 @@ import (
 
 	"github.com/Josh012422/utils/misc"
 	"github.com/Josh012422/utils/commands"
+	"github.com/Josh012422/utils/prompts"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	homedir "github.com/mitchellh/go-homedir"
@@ -94,6 +95,14 @@ var timeCompareCmd = &cobra.Command{
 		tz1, _ := cmd.Flags().GetString("timezone")
 		tz2, _ := cmd.Flags().GetString("2timezone")
 		hff, _ := cmd.Flags().GetBool("12hour")
+
+		if tz1 == "" {
+			prompts.PromptTimezone("Timezone 1: ")
+		}
+
+		if tz2 == "" {
+			prompts.PromptTimezone("Timezone 2: ")
+		}
 
 		tzo1, tzo2, err := command.ConvertTime(tz1, tz2, hff)
 
