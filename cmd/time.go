@@ -20,7 +20,7 @@ import (
 	"time"
 
 	"github.com/Josh012422/utils/misc"
-	"github.com/Josh012422/utils/command"
+	"github.com/Josh012422/utils/commands"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	homedir "github.com/mitchellh/go-homedir"
@@ -91,11 +91,17 @@ var timeCompareCmd = &cobra.Command{
 	Short: "Returns two timezones instead of one",
 	Long: `Returns two timezones so you can compare one to each other`,
 	Run: func(cmd *cobra.Command, args[]string){
-		tz1 := cmd.Flags().GetString(timezone)
-		tz2 := cmd.Flags().GetString(2timezone)
-		hff := cmd.Flags().GetBool(12hour)
+		tz1, _ := cmd.Flags().GetString("timezone")
+		tz2, _ := cmd.Flags().GetString("2timezone")
+		hff, _ := cmd.Flags().GetBool("12hour")
 
-		command.ConvertTime(tz1, tz2, hff)
+		tzo1, tzo2, err := command.ConvertTime(tz1, tz2, hff)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		fmt.Println(misc.Cyan("The time in ") + misc.Blue(tz1) + ": " + tzo1 + " " + misc.Blue("The time in ") + misc.Cyan(tz2) + ": " + tzo2)
 	},
 }
 
@@ -112,7 +118,7 @@ func init() {
 
 	timeCompareCmd.Flags().StringP("timezone", "t", "", "The timezone to obtain the time zone. MUST BE: CONTINENT/CITY. MUST BE string with double quotes.")
 
-	timeCompareCmd.Flags().StringP("2timezone", "s" "", "The second timezone to obtain values. MUST BE: CONTINENT/CITY. MUST BE string with double quotes, It is mandatory for this command")
+	timeCompareCmd.Flags().StringP("2timezone", "s", "", "The second timezone to obtain values. MUST BE: CONTINENT/CITY. MUST BE string with double quotes, It is mandatory for this command")
 
 	timeCompareCmd.Flags().BoolP("12hour", "1", false, "Displays the time in 12 hour format, if not provided defaults to 24 hour format")
 
