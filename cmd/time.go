@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/Josh012422/utils/misc"
+	"github.com/Josh012422/utils/command"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	homedir "github.com/mitchellh/go-homedir"
@@ -51,6 +52,7 @@ var timeCmd = &cobra.Command{
 		}
 
 		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == false) {
+			fmt.Sprintf("?title=%s&body=%s")
 			t := time.Now().In(location)
 			t.String()
 			fmt.Println(txt + t.Format("15:04:05 pm"))
@@ -84,8 +86,22 @@ var timeCmd = &cobra.Command{
 
 }
 
+var timeCompareCmd = &cobra.Command{
+	Use: "compare",
+	Short: "Returns two timezones instead of one",
+	Long: `Returns two timezones so you can compare one to each other`,
+	Run: func(cmd *cobra.Command, args[]string){
+		tz1 := cmd.Flags().GetString(timezone)
+		tz2 := cmd.Flags().GetString(2timezone)
+		hff := cmd.Flags().GetBool(12hour)
+
+		command.ConvertTime(tz1, tz2, hff)
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(timeCmd)
+	timeCmd.AddCommand(timeCompareCmd)
 
 	// Here you will define your flags and configuration settings.
 	timeCmd.Flags().StringP("timezone", "t", "", "The timezone to obtain the time zone. MUST BE: CONTINENT/CITY. MUST BE string with double quotes.")
@@ -93,6 +109,15 @@ func init() {
 	timeCmd.Flags().BoolP("12hour", "1", false, "Displays the time in 12 hour format, if not provided defaults to 24 hour format")
 
 	timeCmd.Flags().StringP("default", "d", "", "This will set the default timezone to he string so you don't have to use -t flag everytime")
+
+	timeCompareCmd.Flags().StringP("timezone", "t", "", "The timezone to obtain the time zone. MUST BE: CONTINENT/CITY. MUST BE string with double quotes.")
+
+	timeCompareCmd.Flags().StringP("2timezone", "s" "", "The second timezone to obtain values. MUST BE: CONTINENT/CITY. MUST BE string with double quotes, It is mandatory for this command")
+
+	timeCompareCmd.Flags().BoolP("12hour", "1", false, "Displays the time in 12 hour format, if not provided defaults to 24 hour format")
+
+	timeCompareCmd.Flags().StringP("default", "d", "", "This will set the default timezone to he string so you don't have to use -t flag everytime")
+
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// newCmd.PersistentFlags().String("foo", "", "A help for foo")
