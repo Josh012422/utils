@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/Josh012422/utils/cmd"
+import "github.com/Josh012422/gocharm/cmd"
 
 func main() {
 	cmd.Execute()

@@ -20,9 +20,9 @@ import (
 	"time"
 	"os"
 
-	"github.com/Josh012422/utils/misc"
-	"github.com/Josh012422/utils/commands"
-	"github.com/Josh012422/utils/prompts"
+	"github.com/Josh012422/gocharm/misc"
+	"github.com/Josh012422/gocharm/commands"
+	"github.com/Josh012422/gocharm/prompts"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	homedir "github.com/mitchellh/go-homedir"
