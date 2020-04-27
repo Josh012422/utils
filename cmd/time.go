@@ -39,7 +39,7 @@ var timeCmd = &cobra.Command{
 			fmt.Println(erro)
 		}
 
-		path := home + "/.config.yml"
+		path := home + "/.config." + getFiletype()
 		viper.New()
 		txt := misc.Cyan("The time is: ")
 		tzFlag,_ := cmd.Flags().GetString("timezone")
@@ -50,7 +50,7 @@ var timeCmd = &cobra.Command{
 			viper.AddConfigPath("..")
 			viper.Set("default", defaultTzFlag)
 			viper.WriteConfig()
-			fmt.Println(misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path))
+			fmt.Println(misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path), getFiletype())
 		}
 
 		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == false) {

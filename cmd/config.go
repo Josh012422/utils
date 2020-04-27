@@ -21,23 +21,44 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/Josh012422/gocharm/config"
 	"github.com/Josh012422/gocharm/misc"
+	"github.com/Josh012422/gocharm/main.go"
 )
+
+var filetype string;
 
 // configCmd represents the config command
 var configCmd = &cobra.Command{
 	Use:   "config",
-	Short: "Creates a .config.yml",
+	Short: "Creates a config file",
 	Long: `Create a config file if not exists`,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		fmt.Println(misc.Yellow("Creating config file..."))
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		create.Execute()
+		filetype, _ = cmd.Flags().GetString("filetype")
+		if filetype == "" {
+			filetype = "yml"
+		}
+
+		success := create.Execute(filetype)
+
+		if success != true {
+			fmt.Println(misc.Red("Sorry there was an unexpected error"), create.GetErr())
+		}
+
+
+
 	},
+}
+
+func getFiletype () string {
+	return filetype
 }
 
 func init() {
 	rootCmd.AddCommand(configCmd)
+
+	configCmd.Flags().StringP("filetype", "f", "yml", "This wil define the type of the config file. (Default is yaml)")
 
 	// Here you will define your flags and configuration settings.
 

@@ -30,11 +30,11 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "utils",
+	Use:   "gocharm",
 	Short: "A multiple utilities cli",
 	Long: `This cli is made to make your life easier, you can use it from terminal, so if your a dev that is so busy to install an utilities app, thén this is for you
 
-	Example: utils time -t "Continent/City"
+	Example: gocharm time -t "Continent/City"
 	Displays the current time`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
@@ -66,6 +66,7 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	fileType := getFiletype()
 
 	if cfgFile != "" {
 		// Use config file from the flag.
@@ -81,7 +82,7 @@ func initConfig() {
 		// Search config in home directory with name ".cli" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".config")
-		viper.SetConfigType("yml")
+		viper.SetConfigType(fileType)
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
