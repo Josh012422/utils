@@ -22,11 +22,11 @@ func ValidateEmptyString (input string) error {
 	return nil
 }
 
-func isValidLocation (loc string) error {
-	_, err := time.LoadLocation(loc)
+func isValidLocation (input string) error {
+	_, err := time.LoadLocation(input)
 
 	if err != nil {
-		return err
+		return errors.New("Not a valid location")
 	}
 
 	return nil

@@ -7,7 +7,7 @@ import (
 func PromptTimezone1 (name string) (string, error) {
 	promptTz1 := promptui.Prompt{
 		Label: name,
-		Validate: ValidateEmptyString,
+		Validate: isValidLocation,
 	}
 
 	return promptTz1.Run()
@@ -16,7 +16,7 @@ func PromptTimezone1 (name string) (string, error) {
 func PromptTimezone2 (name string) (string, error) {
         promptTz2 := promptui.Prompt{
                 Label: name,
-                Validate: ValidateEmptyString,
+                Validate: isValidLocation,
         }
 
         return promptTz2.Run()

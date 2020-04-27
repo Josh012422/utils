@@ -120,6 +120,7 @@ var timeCompareCmd = &cobra.Command{
 			}
 		}
 
+
 		tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
 
 		if err != nil {
