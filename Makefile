@@ -2,8 +2,8 @@ install:
 	@echo "**********Downloading and Installing Dependencies**********"
 	@go get -u github.com/spf13/cobra/cobra
 	@go get -u github.com/mgutz/ansi
-	@go get -u github.com/Josh012422/utils/cmd
-	@go get -u github.com/Josh012422/utils/misc
+	@go get -u github.com/Josh012422/gocharm/cmd
+	@go get -u github.com/Josh012422/gocharm/misc
 	@echo "**********Installing CLI**********"
 	@go install
 	@echo "**********Creating config file**********"

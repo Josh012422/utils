@@ -3,7 +3,7 @@ module github.com/Josh012422/gocharm
 go 1.13
 
 require (
-	github.com/Josh012422/utils v0.0.0-20200427132310-51c7666c698a
+	github.com/Josh012422/gocharm v0.0.0-20200427132310-51c7666c698a
 	github.com/manifoldco/promptui v0.7.0
 
 	// fsnotify
@@ -22,6 +22,8 @@ require (
 	// mitchellh
 
 	github.com/mitchellh/go-homedir v1.1.0
+	github.com/mitchellh/mapstructure v1.3.0 // indirect
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.6.3
+	golang.org/x/sys v0.0.0-20200427175716-29b57079015a // indirect
 )
