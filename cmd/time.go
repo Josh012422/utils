@@ -127,7 +127,7 @@ var timeCompareCmd = &cobra.Command{
 			fmt.Println(err)
 		}
 
-		fmt.Println(misc.Cyan("The time in ") + misc.Blue(tz1) + ": " + tzo1 + " " + misc.Blue("The time in ") + misc.Cyan(tz2) + ": " + tzo2)
+		fmt.Printf(misc.Cyan("The time in ") + misc.Blue(tz1) + ": " + tzo1 + " " + "\n" + misc.Blue("The time in ") + misc.Cyan(tz2) + ": " + tzo2 + "\n")
 	},
 }
 
