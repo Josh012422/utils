@@ -17,17 +17,17 @@ package main
 
 import "github.com/Josh012422/gocharm/cmd"
 
-var FT string;
+//var FT string;
 
 func main() {
 	cmd.Execute()
 }
 
-func setFt (filetype string) {
+/*func setFt (filetype string) {
 	filetype = FT
 }
 
 func getFt () string {
 	return FT
 }
-
+*/
