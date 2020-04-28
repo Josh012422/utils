@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	homedir "github.com/mitchellh/go-homedir"
-	"github.com/Josh012422/utils/misc"
+	"github.com/Josh012422/gocharm/misc"
 )
 
 func Execute (filetype string) bool {
