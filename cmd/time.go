@@ -20,7 +20,6 @@ import (
 	"time"
 	"os"
 
-	"github.com/Josh012422/gocharm/main.go"
 	"github.com/Josh012422/gocharm/misc"
 	"github.com/Josh012422/gocharm/commands"
 	"github.com/Josh012422/gocharm/prompts"
@@ -40,7 +39,7 @@ var timeCmd = &cobra.Command{
 			fmt.Println(erro)
 		}
 
-		path := home + "/.config." + commands.getFt()
+		path := home + "/.config." + command.GetFt()
 		viper.New()
 		txt := misc.Cyan("The time is: ")
 		tzFlag,_ := cmd.Flags().GetString("timezone")
@@ -51,7 +50,7 @@ var timeCmd = &cobra.Command{
 			viper.AddConfigPath("..")
 			viper.Set("default", defaultTzFlag)
 			viper.WriteConfig()
-			fmt.Println(misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path), commands.getFt())
+			fmt.Println(misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path))
 		}
 
 		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == false) {

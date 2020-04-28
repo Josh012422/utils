@@ -22,7 +22,6 @@ import (
 	prom "github.com/manifoldco/promptui"
 	"github.com/Josh012422/gocharm/config"
 	"github.com/Josh012422/gocharm/misc"
-	"github.com/Josh012422/gocharm/main.go"
 	"github.com/Josh012422/gocharm/commands"
 )
 
@@ -38,14 +37,36 @@ var configCmd = &cobra.Command{
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		var erro error;
+		var intr int;
 		filetype, _ = cmd.Flags().GetString("filetype")
+		fmt.Println(filetype)
 		if filetype == "" {
 			promptFt := prom.Select{
 				Label: "Config file type",
-				Items: []string{"Json", "Toml", "Yaml", "Hcl", "Ini"}
+				Items: []string{"JSON", "TOML", "YAML", "HCL", "INI", "PROPERTIES"},
 			}
 
-			_, filetype, erro = promptFt.Run()
+			intr, filetype, erro = promptFt.Run()
+
+			switch intr {
+
+				case 0:
+				   filetype = "json"
+				case 1:
+				   filetype = "toml"
+				case 2:
+				   filetype = "yml"
+				case 3:
+				   filetype = "hcl"
+				case 4:
+				   filetype = "ini"
+				case 5:
+				   filetype = "properties"
+			}
+		}
+
+		if erro != nil {
+			fmt.Println(erro)
 		}
 
 		success := create.Execute(filetype)
@@ -54,7 +75,7 @@ var configCmd = &cobra.Command{
 			fmt.Println(misc.Red("Sorry there was an unexpected error"), create.GetErr())
 		}
 
-		commands.setFt(filetype)
+		command.SetFt(filetype)
 
 	},
 }
@@ -66,7 +87,7 @@ func getFiletype () string {
 func init() {
 	rootCmd.AddCommand(configCmd)
 
-	configCmd.Flags().StringP("filetype", "f", "yml", "This wil define the type of the config file. (Will prompt if not provided)")
+	configCmd.Flags().StringP("filetype", "f", "", "This wil define the type of the config file. (Will prompt if not provided, Default is yaml)")
 
 	// Here you will define your flags and configuration settings.
 
