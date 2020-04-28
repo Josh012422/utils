@@ -10,4 +10,4 @@ install:
 	@go run main.go config
 	@echo "***Succesfully installed CLI***"
 	@cat .bin.txt
-	@echo "Done. Now you can run the cli by typing utils [command] or just utils for a help menu"
+	@echo "Done. Now you can run the cli by typing gocharm [command] or just utils for a help menu"
