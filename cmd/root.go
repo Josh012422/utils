@@ -19,11 +19,9 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
-//	"time"
 
-	homedir "github.com/mitchellh/go-homedir"			//	"github.com/Josh012422/utils/misc"
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
-//	"github.com/Josh012422/utils/config"
 )
 
 var cfgFile string
