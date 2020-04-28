@@ -34,6 +34,7 @@ var timeCmd = &cobra.Command{
 	Short: "This command displays the REAL TIME of any city",
 	Long: `Thid command uses the IANA timezone database, so is the REAL TIME`,
 	Run: func(cmd *cobra.Command, args []string) {
+		check := misc.Green("✓")
 		home, erro := homedir.Dir()
 		if erro != nil {
 			fmt.Println(erro)
@@ -50,7 +51,7 @@ var timeCmd = &cobra.Command{
 			viper.AddConfigPath("..")
 			viper.Set("default", defaultTzFlag)
 			viper.WriteConfig()
-			fmt.Println(misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path))
+			fmt.Println(check, misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path) )
 		}
 
 		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == false) {
