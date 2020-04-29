@@ -18,6 +18,7 @@ package cmd
 
 import (
 	"fmt"
+	"errors"
 
 	"github.com/spf13/cobra"
 //	"github.com/spf13/viper"
@@ -68,10 +69,28 @@ var tasksListCmd = &cobra.Command{
 	},
 }
 
+var tasksViewCmd = &cobra.Command{
+	Use: "view {<number>}",
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) < 1 {
+			return errors.New("Please provide a task number")
+		}
+
+		return nil
+	},
+
+	Short: "Temporal Placeholder",
+	Long: `Temporal Placeholder`,
+	Run: func(cmd *cobra.Command, args []string) {
+		command.View(args[0])
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(tasksCmd)
 	tasksCmd.AddCommand(tasksAddCmd)
 	tasksCmd.AddCommand(tasksListCmd)
+	tasksCmd.AddCommand(tasksViewCmd)
 
 	tasksAddCmd.Flags().StringP("title", "t", "", "The title of new task")
 
