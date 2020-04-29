@@ -29,23 +29,20 @@ import (
 
 // tasksCmd represents the tasks command
 var tasksCmd = &cobra.Command{
-	Use:   "tasks",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use:   "tasks {<add> | <list> | <view> | <complete>}",
+	Short: "A small and simple task manager",
+	Long: `With this simple task manager you can add, list, view and complete tasks to do, For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	gocharm tasks add -t "Do something"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(misc.Red("Please use one of the following commands: add, list, view, complete."))
 	},
 }
 
 var tasksAddCmd = &cobra.Command{
-	Use: "add",
-	Short: "Temporal Placeholder",
-	Long: `Temporal Placeholder`,
+	Use: "add {<title>}",
+	Short: "For add tasks to the list",
+	Long: `Use this command to add tasks to a list saved in the system`,
 	Run: func(cmd *cobra.Command, args []string) {
 	//	viper.New()
 		title, _ := cmd.Flags().GetString("title")
@@ -62,8 +59,8 @@ var tasksAddCmd = &cobra.Command{
 
 var tasksListCmd = &cobra.Command{
 	Use: "list",
-	Short: "Temporal Placeholder",
-	Long: `Temporal Placeholder`,
+	Short: "For list all tasks",
+	Long: `Use this command to list all the pending tasks`,
 	Run: func(cmd *cobra.Command, args []string) {
 		command.List()
 	},
@@ -79,8 +76,8 @@ var tasksViewCmd = &cobra.Command{
 		return nil
 	},
 
-	Short: "Temporal Placeholder",
-	Long: `Temporal Placeholder`,
+	Short: "For view a single task",
+	Long: `Use this command to view a single task instead of all`,
 	Run: func(cmd *cobra.Command, args []string) {
 		command.View(args[0])
 	},
