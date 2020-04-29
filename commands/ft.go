@@ -7,7 +7,8 @@ var FT string;
 
 func SetFt(filetype string) {
 	viper.New()
-	viper.Set("configFileType", filetype)
+	viper.Set("config.filetype", filetype)
+	viper.Set("config.created", true)
 	viper.WriteConfig()
 	filetype = FT
 	fmt.Println(filetype, FT)
@@ -15,6 +16,6 @@ func SetFt(filetype string) {
 
 func GetFt () string {
 	viper.New()
-	FT = viper.GetString("configFileType")
+	FT = viper.GetString("config.filetype")
 	return FT
 }

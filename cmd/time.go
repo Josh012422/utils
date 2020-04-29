@@ -55,7 +55,6 @@ var timeCmd = &cobra.Command{
 		}
 
 		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == false) {
-			fmt.Sprintf("?title=%s&body=%s")
 			t := time.Now().In(location)
 			t.String()
 			fmt.Println(txt + t.Format("15:04:05 pm"))

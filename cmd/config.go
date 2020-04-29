@@ -19,6 +19,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	prom "github.com/manifoldco/promptui"
 	"github.com/Josh012422/gocharm/config"
 	"github.com/Josh012422/gocharm/misc"
@@ -33,14 +34,20 @@ var configCmd = &cobra.Command{
 	Short: "Creates a config file",
 	Long: `Create a config file if not exists`,
 	PreRun: func(cmd *cobra.Command, args []string) {
-		fmt.Println(misc.Yellow("Creating config file..."))
+		fmt.Println(misc.Gray("Creating config file..."))
 	},
 	Run: func(cmd *cobra.Command, args []string) {
+		viper.New()
+		prompted := viper.GetBool("config.created")
 		var erro error;
 		var intr int;
 		filetype, _ = cmd.Flags().GetString("filetype")
-		fmt.Println(filetype)
-		if filetype == "" {
+
+		if filetype == "" && prompted == true {
+			filetype = viper.GetString("config.filetype")
+		}
+
+		if filetype == "" && prompted != true {
 			promptFt := prom.Select{
 				Label: "Config file type",
 				Items: []string{"JSON", "TOML", "YAML", "HCL", "INI", "PROPERTIES"},
