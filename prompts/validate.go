@@ -6,17 +6,12 @@ import (
 	"time"
 )
 
-func ValidateEmptyString (input string) error {
-	timeAgrees := isValidLocation(input)
+func EmptyInput (input string) error {
 
 	if len (strings.TrimSpace(input)) < 1 {
 
 		return errors.New("The input must not be empty")
 
-	}
-
-	if timeAgrees != nil {
-		return errors.New("Not a valid location")
 	}
 
 	return nil

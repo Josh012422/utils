@@ -21,3 +21,12 @@ func PromptTimezone2 (name string) (string, error) {
 
         return promptTz2.Run()
 }
+
+func PromptTitle (name string) (string, error) {
+	promptT := promptui.Prompt{
+		Label: name,
+		Validate: EmptyInput,
+	}
+
+	return promptT.Run()
+}

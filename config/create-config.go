@@ -7,6 +7,7 @@ import (
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/Josh012422/gocharm/misc"
+	"github.com/spf13/viper"
 )
 
 func Execute (filetype string) bool {
@@ -23,6 +24,7 @@ var err error;
 
 func createFile (filetype string) bool {
 	path := home + "/.config." + filetype
+	viper.New()
 	if erro != nil {
 		fmt.Println(misc.Red("Sorry there was an error: "), erro)
 		return true
@@ -43,6 +45,8 @@ func createFile (filetype string) bool {
 		}
 		defer file.Close()
 		fmt.Println(misc.Cyan("Config file created succesfully at"), misc.Green(path))
+		viper.Set("tasks.future_number", 1)
+		viper.Set("tasks.current_number", 1)
 		return true
 		os.Exit(0)
 	}
