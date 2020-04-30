@@ -18,7 +18,7 @@ Let it finish, then:
 $ echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bash_profile
 ```
 
-If you don't have `**_make_**` installed in your machine, then search Google.
+If you don't have **_make_** installed in your machine, then search Google.
 
 **Hint:** If you're on '**_Windows_**' then install choco, then run:
 
