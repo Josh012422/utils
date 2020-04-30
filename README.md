@@ -1,12 +1,12 @@
 # Description
 
-A personal project to learn how to make a cli with cobra and go
+A personal project to learn how to make a **_cli_** with **_cobra_** and go
 
-Make to do your terminal life easier
+Make your terminal life easier.
 
 # Installation
 
-To install, clone the repo the simply run:
+To install, clone the repo then simply run:
 
 ```bash
 $ make
@@ -18,14 +18,14 @@ Let it finish, then:
 $ echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bash_profile
 ```
 
-If you don't have `make` install search Google.
+If you don't have `**_make_**` installed in your machine, then search Google.
 
-Hint: If your on windows installl choco, then run:
+**Hint:** If you're on '**_Windows_**' then install choco, then run:
 
 ```bash
 choco install make
 ```
-Hint: If you are using termux, just run:
+**_Hint:_** If you are using termux, just run:
 
 ```bash
 $ pkg install make
@@ -33,7 +33,7 @@ $ pkg install make
 
 # Usage
 
-The "main" command is gocharm, there are currently 2 commands (There will be more), a list:
+The '**_main_**' command is `gocharm`, there are currently two commands (There will be more), a list:
 
 1. time
 2. tasks
@@ -42,7 +42,7 @@ Each one with his own functionality.
 
 ## Time Command
 
-This command displays the REAL TIME of any city you want, For example:
+This command displays the REAL TIME of any city you want, for example:
 
 ```bash
 $ gocharm time -t "America/New_York" -1
@@ -54,7 +54,7 @@ The "-1" flag tells gocharm to display the time in 12-Hour Format
 
 ### Compare Subcommand
 
-There's a subcommand of time that lets you display the time of 2 different timezones, The Compare Command.
+There's a subcommand of time that lets you display the time of two different timezones. The Compare Command.
 
 ```bash
 $ gocharm time compare
@@ -72,4 +72,4 @@ $ gocharm tasks add
 
 The above command will add a new task with a number a save it in your system.
 
-Note: There's also other subcommands like: list, view, complete (Not finished yet) but for this README the above one is enough.
+NOTE: There's also other subcommands like '**_list_**', '**_view_**', '**_complete_**' .
