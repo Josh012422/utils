@@ -83,11 +83,30 @@ var tasksViewCmd = &cobra.Command{
 	},
 }
 
+var tasksCompleteCmd = &cobra.Command{
+	Use: "complete {<number>}",
+	Args: func(cmd *cobra.Command, args []string) error{
+		if len(args) < 1 {
+			return errors.New("Pleas provide a number")
+		}
+
+		return nil
+	},
+	Short: "For complete tasks",
+	Long: `Use this command to mark tasks as completed. This project use viper for saving the tasks and due to technical limits it can't be deleted so you have to manually delete the task. Usage:
+
+	gocharm tasks complete {<task number>}`,
+	Run: func(cmd *cobra.Command, args []string) {
+		command.Complete(args[0])
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(tasksCmd)
 	tasksCmd.AddCommand(tasksAddCmd)
 	tasksCmd.AddCommand(tasksListCmd)
 	tasksCmd.AddCommand(tasksViewCmd)
+	tasksCmd.AddCommand(tasksCompleteCmd)
 
 	tasksAddCmd.Flags().StringP("title", "t", "", "The title of new task")
 
