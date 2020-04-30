@@ -67,9 +67,61 @@ If don't provide any flag, gocharm will prompt for Timezone 1 and Timezone 2.
 The tasks command is a small and simple task manager, it lets you add and save tasks to a file in your systems, so if you prompted title wrong you can go and modify it.
 
 ```bash
-$ gocharm tasks add
+$ gocharm tasks {<subcommand>}
 ```
 
-The above command will add a new task with a number a save it in your system.
+Here's a list of __all__ subcommands:
 
-NOTE: There's also other subcommands like '**_list_**', '**_view_**', '**_complete_**' .
+1. __add__
+2. __list__
+3. __view__
+4. __complete__
+
+## Add subcommand
+
+This subcommand is used to add a new task and save it, have a look at it:
+
+```bash
+$ gocharm tasks add -t "{<Task Title>}"
+```
+
+This will save the task on the .gocharm.yml file that has been created when you executed 'make'.
+
+__NOTE:__The file is not always yaml, you will be prompted for the file type.
+
+## List subcommand
+
+This subcommand is used to list __every single one__ of your tasks. Look it:
+
+```bash
+$ gocharm tasks list
+```
+
+For the sake of demonstration, I will show you the output:
+
+```bash
+✓. {<Task Title>}  // Completed
+2. {<Other Task Title>}  // Pending
+```
+
+If completed will show a __✓__ sign and that comment telling you that the task is completed, if the task is not completed it will show the task number.
+
+## View subcommand
+
+This subcommand is used to view a __single__ task, Behold the subcommand:
+
+```bash
+$ gocharm tasks view {<Task Number>}
+```
+
+It will show you the __title__ and the __status__.
+
+## Complete subcommand
+
+This command is used to mark tasks as completed, Look at his terminal eyes:
+
+```bash
+$ gocharm tasks complete {<Task Number>}
+```
+
+And that's it, the rest of commands will be documented in [this file.](/docs/full_guide.md)
