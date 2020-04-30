@@ -3,11 +3,12 @@ package command
 import (
 	"fmt"
 	str "strconv"
-	"errors"
 
 	"github.com/spf13/viper"
 	"github.com/Josh012422/gocharm/misc"
 )
+
+// To add a new task
 
 func Add (title string) {
 	viper.New()
@@ -31,6 +32,8 @@ func Add (title string) {
 
 	return
 }
+
+// To list all tasks
 
 func List () {
 	viper.New()
@@ -72,27 +75,81 @@ func List () {
 
 }
 
-func View (id string) error {
-	viper.New()
+// To view a single task
 
-	idViper := viper.GetString("tasks.task." + id + "." + "title")
-	if idViper == "" {
-		return errors.New(misc.Red("No match for number: " + id))
+func View (id string) {
+	viper.New()
+	taskExists := viper.Get("tasks.task." + id)
+
+	if taskExists == nil {
+		fmt.Println(misc.Red("No matching tasks for number: " + id))
+		return
 	}
 
-	txt := misc.Cyan("The task number " + id + ": ")
+	idViper := viper.GetString("tasks.task." + id + "." + "title")
+
+	txt := misc.Cyan("Title of task number " + id + ": ")
 	statusViper := viper.GetString("tasks.task." + id + "." + "status")
 	status := misc.Green("Status of task number " + id + ": ") + statusViper
 
 	fmt.Printf("%s%s\n%s\n", txt, idViper, status)
 
-	return nil
+	return
 }
+
+// To complete tasks
 
 func Complete (id string) {
 	viper.New()
-	viper.Set("tasks.task." + id + "." + "status", "completed")
-	viper.WriteConfig()
-	fmt.Println(misc.Green("✓ Successfully completed task, Cheers!"))
+	numberRaw := viper.GetInt("tasks.current_number")
+
+	var existingTasks bool;
+	var taskExists bool;
+
+	taskExistsViper := viper.Get("tasks.task." + id)
+
+	if taskExistsViper == nil {
+		taskExists = false
+	} else {
+		taskExists = true
+	}
+
+	taskAlreadyCompleted := viper.GetString("tasks.task." + id + "." + "status")
+
+	if numberRaw == 0 {
+		existingTasks = false
+	} else {
+	    existingTasks = true
+	}
+
+	var taskAlreadyCompletedBool bool;
+
+	if taskAlreadyCompleted == "completed" {
+		taskAlreadyCompletedBool = true
+	}
+
+	if existingTasks != false && taskAlreadyCompletedBool == false && taskExists == true {
+		viper.Set("tasks.task." + id + "." + "status", "completed")
+		viper.WriteConfig()
+
+		fmt.Println(misc.Green("✓ Successfully completed task, Cheers!"))
+		return
+	}
+
+	if taskExists == false {
+		fmt.Println(misc.Red("Error: Task does not exists."))
+		return
+	}
+
+	if existingTasks == false {
+		fmt.Println(misc.Red("No existing tasks to complete."))
+		return
+	}
+
+	if existingTasks != false && taskAlreadyCompletedBool == true {
+		fmt.Println(misc.Red("Task already completed ;D"))
+		return
+	}
+
 	return
 }

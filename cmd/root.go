@@ -79,7 +79,7 @@ func initConfig() {
 
 		// Search config in home directory with name ".cli" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigName(".config")
+		viper.SetConfigName(".gocharm")
 		viper.SetConfigType(fileType)
 	}
 

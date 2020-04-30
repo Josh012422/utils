@@ -40,7 +40,7 @@ var timeCmd = &cobra.Command{
 			fmt.Println(erro)
 		}
 
-		path := home + "/.config." + command.GetFt()
+		path := home + "/.gocharm." + command.GetFt()
 		viper.New()
 		txt := misc.Cyan("The time is: ")
 		tzFlag,_ := cmd.Flags().GetString("timezone")
