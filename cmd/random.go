@@ -26,7 +26,7 @@ import (
 
 // randomCmd represents the random command
 var randomCmd = &cobra.Command{
-	Use:   "random",
+	Use:   "random -1 {<number 1>} -2 {<number 2>}",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -39,6 +39,7 @@ to quickly create a Cobra application.`,
 		max, _ := cmd.Flags().GetInt("max")
 
 		command.RanNum(min, max)
+
 	},
 }
 
