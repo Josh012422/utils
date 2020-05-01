@@ -87,7 +87,7 @@ $ gocharm tasks add -t "{<Task Title>}"
 
 This will save the task on the .gocharm.yml file that has been created when you executed 'make'.
 
-__NOTE:__The file is not always yaml, you will be prompted for the file type.
+NOTE:The file is not always yaml, you will be prompted for the file type.
 
 ## List subcommand
 
