@@ -12,7 +12,7 @@ import (
 func RanNum (min int, max int) {
 
 	rand.Seed(time.Now().UnixNano())
-	r := rand.Intn((max - min) + max)
+	r := rand.Intn((max) - min)
 	rS := str.Itoa(r)
 	txt := misc.Bold(misc.Cyan("Gocharm says:"))
 	rT := misc.Bold(rS)
