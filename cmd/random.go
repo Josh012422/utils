@@ -16,24 +16,18 @@ limitations under the License.
 package cmd
 
 import (
-//	"fmt"
-//	"math/rand"
 
 	"github.com/spf13/cobra"
-///	"github.com/Josh012422/gocharm/misc"
 	"github.com/Josh012422/gocharm/commands"
 )
 
 // randomCmd represents the random command
 var randomCmd = &cobra.Command{
 	Use:   "random -1 {<number 1>} -2 {<number 2>}",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "To generate a pseudo-random number",
+	Long: `This command is here to help you take decisions and generate a random number for whatever you want to, For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	$ gocharm random`,
 	Run: func(cmd *cobra.Command, args []string) {
 		min, _ := cmd.Flags().GetInt("min")
 		max, _ := cmd.Flags().GetInt("max")
@@ -45,15 +39,10 @@ to quickly create a Cobra application.`,
 
 var randomDecisionCmd = &cobra.Command{
 	Use: "decision -1 {<decision 1>} -2 {<decision 2>}",
-/*	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 1 {
-			return errors.New("Please provide decisions")
-		}
+	Short: "To help you take decisions",
+	Long: `This command is here to help you, undecise person, take decisions. For example:
 
-		return nil
-	},*/
-	Short: "TP",
-	Long: `TP`,
+	$ gocharm random decision -1 {<decision 1>} -2 {<decision>}`,
 	Run: func(cmd *cobra.Command, args []string) {
 		dec1, _ := cmd.Flags().GetString("one")
 		dec2, _ := cmd.Flags().GetString("two")
