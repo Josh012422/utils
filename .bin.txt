@@ -1,1 +1,0 @@
-Now to run the utils command, execute: echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bash_profile
