@@ -44,3 +44,23 @@ Gocharm speaked. Gocharm out.
 Pretty cool, huh.
 
 Well that's it for this __command.__
+
+# Cron command
+
+This command is here to help you measure time, Look it, id does not bite:
+
+```golang
+$ gocharm cron
+```
+As simple at that, Look at the output:
+
+```golang
+Cronometer running...
+Hit enter to stop.
+
+// 1 minute and 30 seconds later
+
+Time elapsed: 1m30.274817462s
+```
+
+Well, another command documented.
