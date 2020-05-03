@@ -21,10 +21,9 @@ import (
 	"errors"
 
 	"github.com/spf13/cobra"
-//	"github.com/spf13/viper"
+	sur "github.com/AlecAivazis/survey/v2"
 	"github.com/Josh012422/gocharm/misc"
 	"github.com/Josh012422/gocharm/commands"
-	"github.com/Josh012422/gocharm/prompts"
 )
 
 // tasksCmd represents the tasks command
@@ -44,12 +43,17 @@ var tasksAddCmd = &cobra.Command{
 	Short: "For add tasks to the list",
 	Long: `Use this command to add tasks to a list saved in the system`,
 	Run: func(cmd *cobra.Command, args []string) {
-	//	viper.New()
 		title, _ := cmd.Flags().GetString("title")
+		titleSur := ""
 
 		if title == "" {
 			fmt.Println(misc.Red("Please provide a title: "))
-			title, _ = prompts.PromptTitle("Title")
+			titleSurvey := &sur.Input{
+				Message: "Title:",
+			}
+
+			 _ = sur.AskOne(titleSurvey, &titleSur)
+			 title = titleSur
 		}
 
 		command.Add(title)

@@ -3,6 +3,7 @@ package command
 import (
 	"fmt"
 	str "strconv"
+	"strings"
 
 	"github.com/spf13/viper"
 	"github.com/Josh012422/gocharm/misc"
@@ -90,7 +91,7 @@ func View (id string) {
 
 	txt := misc.Cyan("Title of task number " + id + ": ")
 	statusViper := viper.GetString("tasks.task." + id + "." + "status")
-	status := misc.Green("Status of task number " + id + ": ") + statusViper
+	status := misc.Green("Status of task number " + id + ": ") + strings.ToUpper(statusViper)
 
 	fmt.Printf("%s%s\n%s\n", txt, idViper, status)
 

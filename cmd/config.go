@@ -13,6 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+// TODO: Clean useless comments
+
 package cmd
 
 import (
@@ -20,10 +23,10 @@ import (
 	"io"
 	"os"
 	"bufio"
+	str "strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-//	prom "github.com/manifoldco/promptui"
 	sur "github.com/AlecAivazis/survey/v2"
 	"github.com/Josh012422/gocharm/config"
 	"github.com/Josh012422/gocharm/misc"
@@ -78,9 +81,6 @@ var configCmd = &cobra.Command{
 
 		prompted := viper.GetBool("config.created")
 
-		/*var erro error;
-		var intr int;*/
-
 		filetype, _ = cmd.Flags().GetString("filetype")
 
 		if filetype == "" && prompted == true {
@@ -88,12 +88,6 @@ var configCmd = &cobra.Command{
 		}
 
 		if filetype == "" && prompted != true {
-		/*	promptFt := prom.Select{
-				Label: "Config file type",
-				Items: []string{"JSON", "TOML", "YAML", "HCL", "INI", "PROPERTIES"},
-			}*/
-
-			// TODO: Ask here the survey.
 
 			err := sur.Ask(cfgFiletype, &answers)
 
@@ -102,9 +96,7 @@ var configCmd = &cobra.Command{
 				return
 			}
 
-			//intr, filetype, erro = promptFt.Run()
-
-			switch answers.Filetype {
+			/*switch answers.Filetype {
 
 				case "JSON":
 				   filetype = "json"
@@ -118,7 +110,9 @@ var configCmd = &cobra.Command{
 				   filetype = "ini"
 				case "PROPERTIES":
 				   filetype = "properties"
-			}
+			}*/
+
+			filetype = str.ToLower(answers.Filetype)
 
 			tz := &sur.Input{
 				Message: "Default Timezone:",
