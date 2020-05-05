@@ -107,6 +107,7 @@ func List () {
 
 
 	for i := 0; i < numberRaw; i++{
+
 		statusNum := str.Itoa(statusNumRaw)
 		statusViper := viper.GetString("tasks.task." + statusNum + "." + "status")
 		sum := 1
@@ -124,8 +125,19 @@ func List () {
 			hasItems = true
 		}
 
+		title := viper.GetString("tasks.task." + numStr + "." + "title")
+
 		items := make([]string, itemsNum)
 		itemRaw := 1
+
+		switch statusViper {
+			case "completed":
+				numColor = misc.Green("✓" + ".")
+				statusTxt = misc.Green("// Completed")
+			case "uncompleted":
+				numColor = misc.Gray(numStr + ".")
+				statusTxt = misc.Gray("// Pending")
+		}
 
 		if hasItems == true {
 			numIt := 0
@@ -138,37 +150,24 @@ func List () {
 				numItemsRaw += 1
 				sum := 1
 				numIt += sum
-				fmt.Println(items)
+			//	fmt.Println(items)
 			}
 
-			/*for i := 0; i < itemsNum; i++ {
-				fmt.Println(numItemsRaw, itemsNumRaw)
-				numStr := str.Itoa(itemsNumRaw)
-			//	itemStr := str.Itoa(itemRaw)
-			//	items := make([]string, itemsNum)
-			//	itemsNumStr := str.Itoa(numItemsRaw)
-			//	items[numItemsRaw] = viper.GetString("tasks.task." + numStr + "." + "items.item." + numStr)
+			itemsLenght := len(items)
+			fmt.Printf("%s %s  %s \n", numColor, title, statusTxt)
+			fmtItems := 0
 
-				lol := viper.GetString("tasks.task." + numStr + "." + "items.item.2")
+			for i := 0; i < itemsLenght; i++{
+				fmt.Printf("      • %s \n", items[fmtItems])
+				fmtItems += 1
+			}
 
-				itemsNumRaw += 1
-				numItemsRaw += 1
-				fmt.Println(items, lol, numItemsRaw, numStr)
-			}*/
 		}
 
+		if hasItems == false {
 
-		switch statusViper {
-			case "completed":
-				numColor = misc.Green("✓" + ".")
-				statusTxt = misc.Green("// Completed")
-			case "uncompleted":
-				numColor = misc.Gray(numStr + ".")
-				statusTxt = misc.Gray("// Pending")
+			fmt.Printf("%s %s  %s\n", numColor, title, statusTxt)
 		}
-
-		title := viper.GetString("tasks.task." + numStr + "." + "title")
-		fmt.Printf("%s %s  %s\n", numColor, title, statusTxt)
 		statusNumRaw += sum;
 		itemsNumRaw += sum
 	}
