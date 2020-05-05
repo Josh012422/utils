@@ -3,6 +3,7 @@ module github.com/Josh012422/gocharm
 go 1.13
 
 require (
+	github.com/AlecAivazis/survey/v2 v2.0.7
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/lunixbochs/vtclean v1.0.0 // indirect
 	github.com/manifoldco/promptui v0.7.0

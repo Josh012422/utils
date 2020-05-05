@@ -22,6 +22,7 @@ import (
 
 	"github.com/spf13/cobra"
 //	"github.com/spf13/viper"
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/Josh012422/gocharm/misc"
 	"github.com/Josh012422/gocharm/commands"
 	"github.com/Josh012422/gocharm/prompts"
@@ -54,6 +55,27 @@ var tasksAddCmd = &cobra.Command{
 
 		command.Add(title)
 
+	},
+}
+
+var tasksAddItemCmd = &cobra.Command{
+	Use: "item -c {<content>} -t {<task number>}",
+	Short: "Tp",
+	Long: `Tp`,
+	Run: func(cmd *cobra.Command, args []string) {
+		content, _ := cmd.Flags().GetString("content")
+		task, _ := cmd.Flags().GetInt("task")
+
+
+		if content == "" {
+			contentSurvey := &survey.Input{
+				Message: "Please provide some content:",			}
+
+			_ = survey.AskOne(contentSurvey, &content)
+		}
+
+
+		command.AddItem(content, task)
 	},
 }
 
@@ -107,6 +129,11 @@ func init() {
 	tasksCmd.AddCommand(tasksListCmd)
 	tasksCmd.AddCommand(tasksViewCmd)
 	tasksCmd.AddCommand(tasksCompleteCmd)
+	tasksAddCmd.AddCommand(tasksAddItemCmd)
+
+	tasksAddItemCmd.Flags().IntP("task", "t", 99, "The number of the task to add the item to")
+
+	tasksAddItemCmd.Flags().StringP("content", "c", "", "The content of the new item task")
 
 	tasksAddCmd.Flags().StringP("title", "t", "", "The title of new task")
 

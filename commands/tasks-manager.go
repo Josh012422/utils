@@ -3,6 +3,7 @@ package command
 import (
 	"fmt"
 	str "strconv"
+	"os"
 
 	"github.com/spf13/viper"
 	"github.com/Josh012422/gocharm/misc"
@@ -23,6 +24,8 @@ func Add (title string) {
 	viper.Set("tasks.task." + numberStr, nil)
 	viper.Set("tasks.task." + numberStr + "." + "title", title)
 	viper.Set("tasks.task." + numberStr + "." + "status", "uncompleted")
+	viper.Set("tasks.task." + numberStr + "." + "items_future_number", 1)
+	viper.Set("tasks.task." + numberStr + "." + "items_current_number", 0)
 	fmt.Printf("%s%s %s%d\n", success, titleColor, numberColor,  numberRaw)
 	viper.Set("tasks.current_number", numberRaw)
 	viper.WriteConfig()
@@ -31,6 +34,56 @@ func Add (title string) {
 	viper.WriteConfig()
 
 	return
+}
+
+// To add a new item to a task
+
+func AddItem (content string, idRaw int) {
+	viper.New()
+
+	id := str.Itoa(idRaw)
+
+//	numberCurr := viper.GetString("tasks.task." + id + "items_current_number")
+
+	numberFutRaw := viper.GetInt("tasks.task." + id + "." + "items_future_number")
+
+	numberFut := str.Itoa(numberFutRaw)
+
+	numberCurr := viper.GetInt("tasks.task." + id + "." + "items_current_number")
+
+	success := misc.Bold(misc.Green("Succesfully added new item to task number:"))
+
+	taskExistsViper := viper.Get("tasks.task." + id)
+	var taskExists bool
+
+	if taskExistsViper == nil {
+		taskExists = false
+		fmt.Println(misc.Red("Error: Task does not exists"))
+		os.Exit(1)
+		return
+	} else {
+		taskExists = true
+	}
+
+	if taskExists == true {
+
+		viper.Set("tasks.task." + id + "." + "items", nil)
+		viper.Set("tasks.task." + id + "." + "items.item", nil)
+
+		viper.Set("tasks.task." + id + "." + "items.item." + numberFut, content)
+		numberFutRaw += 1
+		numberFut = str.Itoa(numberFutRaw)
+		numberCurr += 1
+		viper.Set("tasks.task." + id + "." + "items_future_number", numberFut)
+		viper.Set("tasks.task." + id + "." + "items_current_number", numberCurr)
+		viper.WriteConfig()
+
+		fmt.Printf("%s %s. \n%s %s \n", success, id, misc.Bold(misc.Green("Item content:")), content)
+		os.Exit(0)
+		return
+	}
+	return
+
 }
 
 // To list all tasks
@@ -42,11 +95,16 @@ func List () {
 
 	if numberRaw == 0 {
 		fmt.Println(misc.Red("No pending tasks"))
+		os.Exit(3)
+		return
 	}
 	statusNumRaw := 1
 
 	numRaw := 1
+	itemsNumRaw := 1
+	numItemsRaw := 0
 	fmt.Sprintf(numberStr)
+
 
 	for i := 0; i < numberRaw; i++{
 		statusNum := str.Itoa(statusNumRaw)
@@ -56,6 +114,49 @@ func List () {
 		numRaw += sum;
 		var numColor string;
 		var statusTxt string;
+
+		itemsNum := viper.GetInt("tasks.task." + numStr + "." + "items_current_number")
+		var hasItems bool
+
+		if itemsNum == 0 {
+			hasItems = false
+		} else {
+			hasItems = true
+		}
+
+		items := make([]string, itemsNum)
+		itemRaw := 1
+
+		if hasItems == true {
+			numIt := 0
+			for i:= 0; i < itemsNum; i++{
+				numStr := str.Itoa(itemsNumRaw)
+				itemStr := str.Itoa(itemRaw)
+				items[numIt] = viper.GetString("tasks.task." + numStr + "." + "items.item." + itemStr)
+				itemRaw += 1
+			//	itemsNumRaw += 1
+				numItemsRaw += 1
+				sum := 1
+				numIt += sum
+				fmt.Println(items)
+			}
+
+			/*for i := 0; i < itemsNum; i++ {
+				fmt.Println(numItemsRaw, itemsNumRaw)
+				numStr := str.Itoa(itemsNumRaw)
+			//	itemStr := str.Itoa(itemRaw)
+			//	items := make([]string, itemsNum)
+			//	itemsNumStr := str.Itoa(numItemsRaw)
+			//	items[numItemsRaw] = viper.GetString("tasks.task." + numStr + "." + "items.item." + numStr)
+
+				lol := viper.GetString("tasks.task." + numStr + "." + "items.item.2")
+
+				itemsNumRaw += 1
+				numItemsRaw += 1
+				fmt.Println(items, lol, numItemsRaw, numStr)
+			}*/
+		}
+
 
 		switch statusViper {
 			case "completed":
@@ -69,6 +170,7 @@ func List () {
 		title := viper.GetString("tasks.task." + numStr + "." + "title")
 		fmt.Printf("%s %s  %s\n", numColor, title, statusTxt)
 		statusNumRaw += sum;
+		itemsNumRaw += sum
 	}
 
 	return
