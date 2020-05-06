@@ -70,7 +70,8 @@ func AddItem (content string, idRaw int) {
 		viper.Set("tasks.task." + id + "." + "items", nil)
 		viper.Set("tasks.task." + id + "." + "items.item", nil)
 
-		viper.Set("tasks.task." + id + "." + "items.item." + numberFut, content)
+		viper.Set("tasks.task." + id + "." + "items.item." + numberFut + ".content", content)
+		viper.Set("tasks.task." + id + ".items.item." + numberFut + ".status", "uncompleted")
 		numberFutRaw += 1
 		numberFut = str.Itoa(numberFutRaw)
 		numberCurr += 1
@@ -139,27 +140,47 @@ func List () {
 				statusTxt = misc.Gray("// Pending")
 		}
 
+		// To list all items for a task
+
 		if hasItems == true {
 			numIt := 0
 			for i:= 0; i < itemsNum; i++{
 				numStr := str.Itoa(itemsNumRaw)
 				itemStr := str.Itoa(itemRaw)
-				items[numIt] = viper.GetString("tasks.task." + numStr + "." + "items.item." + itemStr)
+				items[numIt] = viper.GetString("tasks.task." + numStr + "." + "items.item." + itemStr + ".content")
 				itemRaw += 1
-			//	itemsNumRaw += 1
 				numItemsRaw += 1
 				sum := 1
 				numIt += sum
-			//	fmt.Println(items)
 			}
 
 			itemsLenght := len(items)
 			fmt.Printf("%s %s  %s \n", numColor, title, statusTxt)
 			fmtItems := 0
+			itemStatusNumRaw := 1
 
 			for i := 0; i < itemsLenght; i++{
-				fmt.Printf("      • %s \n", items[fmtItems])
+				numStr := str.Itoa(itemsNumRaw)
+				itemStr := str.Itoa(itemStatusNumRaw)
+				bulletColor := "•"
+				itemsTxt := items[fmtItems]
+				itemStatusViper := viper.GetString("tasks.task." + numStr + ".items.item." + itemStr + ".status")
+
+				if itemStatusViper == "completed" {
+					bulletColor = misc.Green("✓")
+					itemsTxt = misc.Green(items[fmtItems])
+				}
+
+				if itemStatusViper == "uncompleted" {
+					bulletColor = "•"
+					itemsTxt = items[fmtItems]
+				}
+
+
+				fmt.Printf("     %s %s \n", bulletColor , itemsTxt)
 				fmtItems += 1
+				itemRaw += 1
+				itemStatusNumRaw += 1
 			}
 
 		}
@@ -181,6 +202,15 @@ func List () {
 func View (id string) {
 	viper.New()
 	taskExists := viper.Get("tasks.task." + id)
+	itemsNumViper := viper.GetInt("tasks.task." + id + ".items_current_number")
+	items := make([]string, itemsNumViper)
+	var hasItems bool
+
+	if itemsNumViper == 0 {
+		hasItems = false
+	} else {
+		hasItems = true
+	}
 
 	if taskExists == nil {
 		fmt.Println(misc.Red("No matching tasks for number: " + id))
@@ -194,6 +224,45 @@ func View (id string) {
 	status := misc.Green("Status of task number " + id + ": ") + statusViper
 
 	fmt.Printf("%s%s\n%s\n", txt, idViper, status)
+	fmt.Printf("%s\n", misc.Yellow("Items:"))
+
+	if hasItems == true {
+		itemRaw := 0
+		itemsNumRaw := 1
+		fmtNumRaw := 1
+		fmtItems := 0
+		bulletColor := "•"
+		itemsLenght := len(items)
+
+		itemTxt := items[fmtItems]
+		for i := 0; i < itemsNumViper; i++{
+			itemsNumStr := str.Itoa(itemsNumRaw)
+			items[itemRaw] = viper.GetString("tasks.task." + id + ".items.item." + itemsNumStr + ".content")
+
+			itemRaw += 1
+			itemsNumRaw += 1
+		}
+
+		for i := 0; i < itemsLenght; i++{
+			itemsNumStr := str.Itoa(fmtNumRaw)
+			itemStatusViper := viper.GetString("tasks.task." + id + ".items.item." + itemsNumStr + ".status")
+
+			if itemStatusViper == "completed" {
+				bulletColor = misc.Green("✓")
+				itemTxt = misc.Green(items[fmtItems])
+			}
+
+			if itemStatusViper == "uncompleted" {
+				bulletColor = "•"
+				itemTxt = items[fmtItems]
+			}
+
+			fmtNumRaw += 1
+			fmtItems += 1
+
+			fmt.Printf("   %s %s\n", bulletColor, itemTxt)
+		}
+	}
 
 	return
 }
@@ -248,9 +317,50 @@ func Complete (id string) {
 	}
 
 	if existingTasks != false && taskAlreadyCompletedBool == true {
-		fmt.Println(misc.Red("Task already completed ;D"))
+		fmt.Println(misc.Green("Task already completed ;D"))
 		return
 	}
 
 	return
 }
+
+// To complete tasks items
+
+func CompleteItem (taskId, itemId string) {
+	viper.New()
+	taskExistsViper := viper.Get("tasks.task." + taskId)
+	itemAlreadyCompleted := viper.GetString("tasks.task." + taskId + ".items.item." + itemId + ".status")
+
+	var taskExists bool
+	var itemAlreadyCompletedBool bool
+
+	if itemAlreadyCompleted == "completed" {
+		itemAlreadyCompletedBool = true
+	} else {
+		itemAlreadyCompletedBool = false
+	}
+
+	if taskExistsViper == nil {
+		taskExists = false
+	} else {
+		taskExists = true
+	}
+
+	if taskExists == false {
+		fmt.Println(misc.Red("Error: Task does not exists"))
+		os.Exit(35)
+		return
+	}
+
+	if taskExists == true && itemAlreadyCompletedBool == false {
+
+		viper.Set("tasks.task." + taskId + ".items.item." + itemId + ".status", "completed")
+		fmt.Println("tasks.task." + taskId + ".items.item." + itemId + ".status")
+		viper.WriteConfig()
+		fmt.Println(misc.Green("✓ Succesfully completed item of task " + taskId))
+		return
+	}
+
+	return
+}
+

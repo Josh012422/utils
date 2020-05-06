@@ -123,6 +123,26 @@ var tasksCompleteCmd = &cobra.Command{
 	},
 }
 
+var tasksCompleteItemCmd = &cobra.Command{
+	Use: "item {<task number>} {<item number>}",
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) < 1 {
+			return errors.New("Please provide task and item numbers")
+		}
+
+		return nil
+	},
+
+	Short: "Tp",
+	Long: `Tp`,
+	Run: func(cmd *cobra.Command, args []string) {
+		taskNumber := args[0]
+		itemNumber := args[1]
+
+		command.CompleteItem(taskNumber, itemNumber)
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(tasksCmd)
 	tasksCmd.AddCommand(tasksAddCmd)
@@ -130,6 +150,7 @@ func init() {
 	tasksCmd.AddCommand(tasksViewCmd)
 	tasksCmd.AddCommand(tasksCompleteCmd)
 	tasksAddCmd.AddCommand(tasksAddItemCmd)
+	tasksCompleteCmd.AddCommand(tasksCompleteItemCmd)
 
 	tasksAddItemCmd.Flags().IntP("task", "t", 99, "The number of the task to add the item to")
 
