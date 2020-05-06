@@ -224,9 +224,9 @@ func View (id string) {
 	status := misc.Green("Status of task number " + id + ": ") + statusViper
 
 	fmt.Printf("%s%s\n%s\n", txt, idViper, status)
-	fmt.Printf("%s\n", misc.Yellow("Items:"))
 
 	if hasItems == true {
+		fmt.Printf("%s\n", misc.Yellow("Items:"))
 		itemRaw := 0
 		itemsNumRaw := 1
 		fmtNumRaw := 1
