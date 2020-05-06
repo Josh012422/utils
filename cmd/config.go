@@ -13,20 +13,52 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+// TODO: Clean useless comments
+
 package cmd
 
 import (
 	"fmt"
+	"io"
+	"os"
+	"bufio"
+	str "strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	prom "github.com/manifoldco/promptui"
+	sur "github.com/AlecAivazis/survey/v2"
 	"github.com/Josh012422/gocharm/config"
 	"github.com/Josh012422/gocharm/misc"
 	"github.com/Josh012422/gocharm/commands"
 )
 
 var filetype string;
+
+var cfgFiletype = []*sur.Question{
+	{
+		Name: "filetype",
+		Prompt: &sur.Select{
+			Message: "Choose a config file type:",
+			Options: []string{
+				"YAML",
+				"TOML",
+				"JSON",
+				"HCL",
+				"INI",
+				"PROPERTIES",
+			},
+		},
+		Validate: sur.Required,
+	},
+	{
+		Name: "set",
+		Prompt: &sur.Confirm{
+			Message: "Set default timezone now?",
+		},
+		Validate: sur.Required,
+	},
+}
 
 // configCmd represents the config command
 var configCmd = &cobra.Command{
@@ -38,9 +70,17 @@ var configCmd = &cobra.Command{
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		viper.New()
+
+		answers := struct {
+			Filetype string
+			Set bool
+		}{}
+
+		timezone := ""
+
+
 		prompted := viper.GetBool("config.created")
-		var erro error;
-		var intr int;
+
 		filetype, _ = cmd.Flags().GetString("filetype")
 
 		if filetype == "" && prompted == true {
@@ -48,35 +88,53 @@ var configCmd = &cobra.Command{
 		}
 
 		if filetype == "" && prompted != true {
-			promptFt := prom.Select{
-				Label: "Config file type",
-				Items: []string{"JSON", "TOML", "YAML", "HCL", "INI", "PROPERTIES"},
+
+			err := sur.Ask(cfgFiletype, &answers)
+
+			if err != nil {
+				fmt.Println(err.Error())
+				return
 			}
 
-			intr, filetype, erro = promptFt.Run()
+			/*switch answers.Filetype {
 
-			switch intr {
-
-				case 0:
+				case "JSON":
 				   filetype = "json"
-				case 1:
+				case "TOML":
 				   filetype = "toml"
-				case 2:
+				case "YAML":
 				   filetype = "yml"
-				case 3:
+				case "HCL":
 				   filetype = "hcl"
-				case 4:
+				case "INI":
 				   filetype = "ini"
-				case 5:
+				case "PROPERTIES":
 				   filetype = "properties"
+			}*/
+
+			filetype = str.ToLower(answers.Filetype)
+
+			tz := &sur.Input{
+				Message: "Default Timezone:",
 			}
+
+			if answers.Set == true {
+				_ = sur.AskOne(tz, &timezone)
+
+				viper.Set("default", timezone)
+				fmt.Println(misc.Green("✓ Succesfully saved default timezone"))
+			}
+
 		}
 
-		if erro != nil {
+		/*if erro != nil {
 			fmt.Println(erro)
-		}
+		}*/
 
 		success := create.Execute(filetype)
+
+		fmt.Println("Press enter to continue")
+		_ = waitForEnter(os.Stdin)
 
 		if success != true {
 			fmt.Println(misc.Red("Sorry there was an unexpected error"), create.GetErr())
@@ -89,6 +147,12 @@ var configCmd = &cobra.Command{
 
 func getFiletype () string {
 	return filetype
+}
+
+func waitForEnter(r io.Reader) error {
+	scanner := bufio.NewScanner(r)
+	scanner.Scan()
+	return scanner.Err()
 }
 
 func init() {

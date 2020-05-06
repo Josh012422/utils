@@ -18,11 +18,10 @@ package cmd
 import (
 	"fmt"
 	"time"
-	"os"
 
 	"github.com/Josh012422/gocharm/misc"
 	"github.com/Josh012422/gocharm/commands"
-	"github.com/Josh012422/gocharm/prompts"
+	sur "github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	homedir "github.com/mitchellh/go-homedir"
@@ -43,14 +42,19 @@ var timeCmd = &cobra.Command{
 		path := home + "/.gocharm." + command.GetFt()
 		viper.New()
 		txt := misc.Cyan("The time is: ")
+
 		tzFlag,_ := cmd.Flags().GetString("timezone")
 		hourFormatFlag,_ := cmd.Flags().GetBool("12hour")
+
 		location,_ := time.LoadLocation(tzFlag)
 		defaultTzFlag,_ := cmd.Flags().GetString("default")
+
 		if (defaultTzFlag != "") {
+
 			viper.AddConfigPath("..")
 			viper.Set("default", defaultTzFlag)
 			viper.WriteConfig()
+
 			fmt.Println(check, misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path) )
 		}
 
@@ -72,7 +76,7 @@ var timeCmd = &cobra.Command{
 
 			t := time.Now().In(viperLocation)
 			t.String()
-			fmt.Println(txt + t.Format(/*2006-06-02*/"15:04:05 pm"))
+			fmt.Println(txt + t.Format("15:04:05 pm"))
 		}
 
 		if (tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == true) {
@@ -81,7 +85,7 @@ var timeCmd = &cobra.Command{
 
 			t := time.Now().In(viperLocation)
 			t.String()
-			fmt.Println(txt + t.Format(/*2006-06-02*/"3:04:05 pm"))
+			fmt.Println(txt + t.Format("3:04:05 pm"))
 		}
 
 	},
@@ -96,28 +100,43 @@ var timeCompareCmd = &cobra.Command{
 		tz1, _ := cmd.Flags().GetString("timezone")
 		tz2, _ := cmd.Flags().GetString("2timezone")
 		hff, _ := cmd.Flags().GetBool("12hour")
+		tz1sur := ""
+		tz2sur := ""
 		var tzo1, tzo2 string;
 		var err error;
-		var errTz1 error;
-		var errTz2 error;
+		/*var errTz1 error;
+		var errTz2 error;*/
 
 		if tz1 == "" {
-			tz1, errTz1 = prompts.PromptTimezone1("Timezone 1")
+			/*tz1, errTz1 = prompts.PromptTimezone1("Timezone 1")
 			tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
 			if errTz1 != nil {
 				fmt.Println(errTz1)
 				os.Exit(1)
+			}*/
+
+			tz1survey := &sur.Input{
+				Message: "Timezone 1:",
 			}
+
+			_ = sur.AskOne(tz1survey, &tz1sur)
+			tz1 = tz1sur
 		}
 
 		if tz2 == "" {
-			tz2, errTz2 = prompts.PromptTimezone2("Timezone 2")
+			/*tz2, errTz2 = prompts.PromptTimezone2("Timezone 2")
 			tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
 
 			if errTz2 != nil {
 				fmt.Println(errTz2)
 				os.Exit(1)
+			}*/
+			tz2survey := &sur.Input{
+				Message: "Timezone 2:",
 			}
+
+			_ = sur.AskOne(tz2survey, &tz2sur)
+			tz2 = tz2sur
 		}
 
 
