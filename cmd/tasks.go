@@ -25,7 +25,7 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/Josh012422/gocharm/misc"
 	"github.com/Josh012422/gocharm/commands"
-	"github.com/Josh012422/gocharm/prompts"
+//	"github.com/Josh012422/gocharm/prompts"
 )
 
 // tasksCmd represents the tasks command
@@ -49,8 +49,13 @@ var tasksAddCmd = &cobra.Command{
 		title, _ := cmd.Flags().GetString("title")
 
 		if title == "" {
+
+			titleQs := &survey.Input{
+				Message: "Title:",
+			}
+
 			fmt.Println(misc.Red("Please provide a title: "))
-			title, _ = prompts.PromptTitle("Title")
+			_ = survey.AskOne(titleQs, &title)
 		}
 
 		command.Add(title)

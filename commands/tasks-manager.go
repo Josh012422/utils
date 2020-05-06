@@ -4,6 +4,7 @@ import (
 	"fmt"
 	str "strconv"
 	"os"
+	"strings"
 
 	"github.com/spf13/viper"
 	"github.com/Josh012422/gocharm/misc"
@@ -221,7 +222,8 @@ func View (id string) {
 
 	txt := misc.Cyan("Title of task number " + id + ": ")
 	statusViper := viper.GetString("tasks.task." + id + "." + "status")
-	status := misc.Green("Status of task number " + id + ": ") + statusViper
+	statusViperStr := strings.ToUpper(statusViper)
+	status := misc.Green("Status of task number " + id + ": ") + statusViperStr
 
 	fmt.Printf("%s%s\n%s\n", txt, idViper, status)
 
