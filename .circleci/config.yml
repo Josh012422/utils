@@ -41,7 +41,7 @@ jobs:
       - slack/status:
               fail_only: false
               mentions: 'Carlos Adolfo Ortiz Q., DJBlueSlime'
-              only_for_branches: only_for_branches
+              only_for_branches: master, dev
               webhook: webhook
 
 orbs:
