@@ -19,21 +19,21 @@ limitations under the License.
 package cmd
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"os"
-	"bufio"
 	str "strings"
 
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	sur "github.com/AlecAivazis/survey/v2"
+	"github.com/Josh012422/gocharm/commands"
 	"github.com/Josh012422/gocharm/config"
 	"github.com/Josh012422/gocharm/misc"
-	"github.com/Josh012422/gocharm/commands"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
-var filetype string;
+var filetype string
 
 var cfgFiletype = []*sur.Question{
 	{
@@ -64,7 +64,7 @@ var cfgFiletype = []*sur.Question{
 var configCmd = &cobra.Command{
 	Use:   "config",
 	Short: "Creates a config file",
-	Long: `Create a config file if not exists`,
+	Long:  `Create a config file if not exists`,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		fmt.Println(misc.Gray("Creating config file..."))
 	},
@@ -73,11 +73,10 @@ var configCmd = &cobra.Command{
 
 		answers := struct {
 			Filetype string
-			Set bool
+			Set      bool
 		}{}
 
 		timezone := ""
-
 
 		prompted := viper.GetBool("config.created")
 
@@ -145,7 +144,7 @@ var configCmd = &cobra.Command{
 	},
 }
 
-func getFiletype () string {
+func getFiletype() string {
 	return filetype
 }
 

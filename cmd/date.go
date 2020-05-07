@@ -20,16 +20,16 @@ import (
 	"time"
 
 	"github.com/Josh012422/gocharm/misc"
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	homedir "github.com/mitchellh/go-homedir"
 )
 
 // newCmd represents the new command
 var dateCmd = &cobra.Command{
 	Use:   "date",
 	Short: "This command displays the REAL DATE of any city",
-	Long: `Thid command uses the IANA timezone database, so is the REAL TIME`,
+	Long:  `Thid command uses the IANA timezone database, so is the REAL TIME`,
 	Run: func(cmd *cobra.Command, args []string) {
 		home, erro := homedir.Dir()
 		if erro != nil {
@@ -39,35 +39,33 @@ var dateCmd = &cobra.Command{
 		path := home + "/.config.yml"
 		viper.New()
 		txt := misc.Green("The date is: ")
-		tzFlag,_ := cmd.Flags().GetString("datezone")
-		location,_ := time.LoadLocation(tzFlag)
-		defaultTzFlag,_ := cmd.Flags().GetString("default")
+		tzFlag, _ := cmd.Flags().GetString("datezone")
+		location, _ := time.LoadLocation(tzFlag)
+		defaultTzFlag, _ := cmd.Flags().GetString("default")
 
-		if (defaultTzFlag != "") {
+		if defaultTzFlag != "" {
 			viper.AddConfigPath("..")
 			viper.Set("default", defaultTzFlag)
 			viper.WriteConfig()
 			fmt.Println(misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path))
 		}
 
-		if (tzFlag != "" && defaultTzFlag == "") {
+		if tzFlag != "" && defaultTzFlag == "" {
 			t := time.Now().In(location)
 			t.String()
 			fmt.Println(txt + t.Format("2006-06-02 Monday January"))
 		}
 
-		if (tzFlag == "" && defaultTzFlag == "") {
+		if tzFlag == "" && defaultTzFlag == "" {
 			viperLocationRaw := viper.GetString("default")
-			viperLocation,_ := time.LoadLocation(viperLocationRaw)
+			viperLocation, _ := time.LoadLocation(viperLocationRaw)
 
 			t := time.Now().In(viperLocation)
 			t.String()
 			fmt.Println(txt + t.Format("2006-06-02 Monday January"))
 		}
 
-
 	},
-
 }
 
 func init() {

@@ -17,15 +17,15 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"errors"
+	"fmt"
 
 	"github.com/spf13/cobra"
-//	"github.com/spf13/viper"
+	//	"github.com/spf13/viper"
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/Josh012422/gocharm/misc"
 	"github.com/Josh012422/gocharm/commands"
-//	"github.com/Josh012422/gocharm/prompts"
+	"github.com/Josh012422/gocharm/misc"
+	//	"github.com/Josh012422/gocharm/prompts"
 )
 
 // tasksCmd represents the tasks command
@@ -41,11 +41,11 @@ var tasksCmd = &cobra.Command{
 }
 
 var tasksAddCmd = &cobra.Command{
-	Use: "add {<title>}",
+	Use:   "add {<title>}",
 	Short: "For add tasks to the list",
-	Long: `Use this command to add tasks to a list saved in the system`,
+	Long:  `Use this command to add tasks to a list saved in the system`,
 	Run: func(cmd *cobra.Command, args []string) {
-	//	viper.New()
+		//	viper.New()
 		title, _ := cmd.Flags().GetString("title")
 
 		if title == "" {
@@ -64,30 +64,28 @@ var tasksAddCmd = &cobra.Command{
 }
 
 var tasksAddItemCmd = &cobra.Command{
-	Use: "item -c {<content>} -t {<task number>}",
+	Use:   "item -c {<content>} -t {<task number>}",
 	Short: "Tp",
-	Long: `Tp`,
+	Long:  `Tp`,
 	Run: func(cmd *cobra.Command, args []string) {
 		content, _ := cmd.Flags().GetString("content")
 		task, _ := cmd.Flags().GetInt("task")
 
-
 		if content == "" {
 			contentSurvey := &survey.Input{
-				Message: "Please provide some content:",			}
+				Message: "Please provide some content:"}
 
 			_ = survey.AskOne(contentSurvey, &content)
 		}
-
 
 		command.AddItem(content, task)
 	},
 }
 
 var tasksListCmd = &cobra.Command{
-	Use: "list",
+	Use:   "list",
 	Short: "For list all tasks",
-	Long: `Use this command to list all the pending tasks`,
+	Long:  `Use this command to list all the pending tasks`,
 	Run: func(cmd *cobra.Command, args []string) {
 		command.List()
 	},
@@ -104,7 +102,7 @@ var tasksViewCmd = &cobra.Command{
 	},
 
 	Short: "For view a single task",
-	Long: `Use this command to view a single task instead of all`,
+	Long:  `Use this command to view a single task instead of all`,
 	Run: func(cmd *cobra.Command, args []string) {
 		command.View(args[0])
 	},
@@ -112,7 +110,7 @@ var tasksViewCmd = &cobra.Command{
 
 var tasksCompleteCmd = &cobra.Command{
 	Use: "complete {<number>}",
-	Args: func(cmd *cobra.Command, args []string) error{
+	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return errors.New("Pleas provide a number")
 		}
@@ -139,7 +137,7 @@ var tasksCompleteItemCmd = &cobra.Command{
 	},
 
 	Short: "Tp",
-	Long: `Tp`,
+	Long:  `Tp`,
 	Run: func(cmd *cobra.Command, args []string) {
 		taskNumber := args[0]
 		itemNumber := args[1]
