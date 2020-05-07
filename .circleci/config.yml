@@ -42,7 +42,7 @@ jobs:
               fail_only: false
               mentions: 'Carlos Adolfo Ortiz Q., DJBlueSlime'
               only_for_branches: master, dev
-              webhook: webhook
+              webhook: https://hooks.slack.com/services/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
 
 orbs:
    sonarcloud: sonarsource/sonarcloud@1.0.1
