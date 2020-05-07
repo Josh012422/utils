@@ -29,9 +29,6 @@ jobs:
           name: Build
           command: go build -v ./...
       - run:
-          name: Vet
-          command: go vet ./...
-      - run:
           name: Install
           command: go install -v
       - run:
