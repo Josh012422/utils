@@ -17,13 +17,13 @@ package cmd
 
 import (
 	"fmt"
-	"time"
 	"os"
-//	"io"
-//	"bufio"
+	"time"
+	//	"io"
+	//	"bufio"
 
-	"github.com/spf13/cobra"
 	"github.com/Josh012422/gocharm/misc"
+	"github.com/spf13/cobra"
 )
 
 // cronCmd represents the cron command
@@ -39,7 +39,7 @@ var cronCmd = &cobra.Command{
 	Time Elapsed: 1m30.274817462s`,
 	Run: func(cmd *cobra.Command, args []string) {
 		start := time.Now()
-		fmt.Printf("Cronometer running...\n%s\n",misc.Red("Hit enter to stop."))
+		fmt.Printf("Cronometer running...\n%s\n", misc.Red("Hit enter to stop."))
 		error1 := waitForEnter(os.Stdin)
 		if error1 != nil {
 			fmt.Println(error1)

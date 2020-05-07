@@ -2,27 +2,27 @@ package create
 
 import (
 	"os"
-//	"io"
+	//	"io"
 	"fmt"
 
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/Josh012422/gocharm/misc"
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
-func Execute (filetype string) bool {
+func Execute(filetype string) bool {
 	success := createFile(filetype)
 	if success == true {
 		return true
 	} else {
-	    return false
+		return false
 	}
 }
 
 var home, erro = homedir.Dir()
-var err error;
+var err error
 
-func createFile (filetype string) bool {
+func createFile(filetype string) bool {
 	path := home + "/.gocharm." + filetype
 	viper.New()
 	if erro != nil {
@@ -38,7 +38,7 @@ func createFile (filetype string) bool {
 		os.Exit(0)
 	}
 
-	if os.IsNotExist(err){
+	if os.IsNotExist(err) {
 		var file, err = os.Create(path)
 		if isError(err) {
 			return false
@@ -54,13 +54,13 @@ func createFile (filetype string) bool {
 
 }
 
-func isError (err error) bool {
+func isError(err error) bool {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 	return (err != nil)
 }
 
-func GetErr () error {
+func GetErr() error {
 	return err
 }
