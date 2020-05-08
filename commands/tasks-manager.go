@@ -16,7 +16,7 @@ const tasksString = "tasks.task."
 const tksCurrNumString = "tasks.current_number"
 const contentString = ".content"
 const statusString = ".status"
-const statusStringWithouDot = "status"
+const statusStringWithoutDot = "status"
 const itemsString = "items.item."
 
 // To add a new task
@@ -364,7 +364,7 @@ func CompleteItem(taskId, itemId string) {
 	if taskExists == true && itemAlreadyCompletedBool == false {
 
 		viper.Set(tasksString+taskId+"."+itemsString+itemId+".status", "completed")
-		fmt.Println(tasksString + taskId + "." + itemsString + itemId + statuaString)
+		fmt.Println(tasksString + taskId + "." + itemsString + itemId + statusString)
 		viper.WriteConfig()
 		fmt.Println(misc.Green("✓ Succesfully completed item of task " + taskId))
 		return
