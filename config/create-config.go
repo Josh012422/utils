@@ -2,7 +2,6 @@ package create
 
 import (
 	"os"
-	//	"io"
 	"fmt"
 
 	"github.com/Josh012422/gocharm/misc"
@@ -27,15 +26,15 @@ func createFile(filetype string) bool {
 	viper.New()
 	if erro != nil {
 		fmt.Println(misc.Red("Sorry there was an error: "), erro)
-		return true
 		os.Exit(1)
+		return true
 	}
 	var fileExists, err = os.Stat(path)
 
 	if fileExists != nil {
 		fmt.Println(misc.Yellow("✗"), misc.Red("Error: Config file already exists in:"), misc.Yellow(path))
-		return true
 		os.Exit(0)
+		return true
 	}
 
 	if os.IsNotExist(err) {
@@ -47,8 +46,8 @@ func createFile(filetype string) bool {
 		fmt.Println(misc.Cyan("Config file created succesfully at"), misc.Green(path))
 		viper.Set("tasks.future_number", 1)
 		viper.Set("tasks.current_number", 0)
-		return true
 		os.Exit(0)
+		return true
 	}
 	return true
 

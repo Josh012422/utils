@@ -31,7 +31,7 @@ import (
 var timeCmd = &cobra.Command{
 	Use:   "time",
 	Short: "This command displays the REAL TIME of any city",
-	Long:  `Thid command uses the IANA timezone database, so is the REAL TIME`,
+	Long:  `This command uses the IANA timezone database, so is the REAL TIME`,
 	Run: func(cmd *cobra.Command, args []string) {
 		check := misc.Green("✓")
 		home, erro := homedir.Dir()

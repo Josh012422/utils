@@ -10,6 +10,15 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Vars
+
+const tasksString = "tasks.task."
+const tksCurrNumString = "tasks.current_number"
+const contentString = ".content"
+const statusString = ".status"
+const statusStringWithouDot = "status"
+const itemsString = "items.item."
+
 // To add a new task
 
 func Add(title string) {
@@ -22,13 +31,13 @@ func Add(title string) {
 	numberRaw := viper.GetInt("tasks.future_number")
 	numberStr := str.Itoa(numberRaw)
 
-	viper.Set("tasks.task."+numberStr, nil)
-	viper.Set("tasks.task."+numberStr+"."+"title", title)
-	viper.Set("tasks.task."+numberStr+"."+"status", "uncompleted")
-	viper.Set("tasks.task."+numberStr+"."+"items_future_number", 1)
-	viper.Set("tasks.task."+numberStr+"."+"items_current_number", 0)
+	viper.Set(tasksString+numberStr, nil)
+	viper.Set(tasksString+numberStr+"."+"title", title)
+	viper.Set(tasksString+numberStr+"."+statusStringWithoutDot, "uncompleted")
+	viper.Set(tasksString+numberStr+"."+"items_future_number", 1)
+	viper.Set(tasksString+numberStr+"."+"items_current_number", 0)
 	fmt.Printf("%s%s %s%d\n", success, titleColor, numberColor, numberRaw)
-	viper.Set("tasks.current_number", numberRaw)
+	viper.Set(tksCurrNumString, numberRaw)
 	viper.WriteConfig()
 	numberRaw += sum
 	viper.Set("tasks.future_number", numberRaw)
@@ -46,15 +55,15 @@ func AddItem(content string, idRaw int) {
 
 	//	numberCurr := viper.GetString("tasks.task." + id + "items_current_number")
 
-	numberFutRaw := viper.GetInt("tasks.task." + id + "." + "items_future_number")
+	numberFutRaw := viper.GetInt(tasksString + id + "." + "items_future_number")
 
 	numberFut := str.Itoa(numberFutRaw)
 
-	numberCurr := viper.GetInt("tasks.task." + id + "." + "items_current_number")
+	numberCurr := viper.GetInt(tasksString + id + "." + "items_current_number")
 
 	success := misc.Bold(misc.Green("Succesfully added new item to task number:"))
 
-	taskExistsViper := viper.Get("tasks.task." + id)
+	taskExistsViper := viper.Get(tasksString + id)
 	var taskExists bool
 
 	if taskExistsViper == nil {
@@ -68,16 +77,16 @@ func AddItem(content string, idRaw int) {
 
 	if taskExists == true {
 
-		viper.Set("tasks.task."+id+"."+"items", nil)
-		viper.Set("tasks.task."+id+"."+"items.item", nil)
+		viper.Set(tasksString+id+"."+"items", nil)
+		viper.Set(tasksString+id+"."+itemsString, nil)
 
-		viper.Set("tasks.task."+id+"."+"items.item."+numberFut+".content", content)
-		viper.Set("tasks.task."+id+".items.item."+numberFut+".status", "uncompleted")
+		viper.Set(tasksString+id+"."+itemsString+numberFut+contentString, content)
+		viper.Set(tasksString+id+"."+itemsString+numberFut+statusString, "uncompleted")
 		numberFutRaw += 1
 		numberFut = str.Itoa(numberFutRaw)
 		numberCurr += 1
-		viper.Set("tasks.task."+id+"."+"items_future_number", numberFut)
-		viper.Set("tasks.task."+id+"."+"items_current_number", numberCurr)
+		viper.Set(tasksString+id+"."+"items_future_number", numberFut)
+		viper.Set(tasksString+id+"."+"items_current_number", numberCurr)
 		viper.WriteConfig()
 
 		fmt.Printf("%s %s. \n%s %s \n", success, id, misc.Bold(misc.Green("Item content:")), content)
@@ -92,7 +101,7 @@ func AddItem(content string, idRaw int) {
 
 func List() {
 	viper.New()
-	numberRaw := viper.GetInt("tasks.current_number")
+	numberRaw := viper.GetInt(tksCurrNumString)
 	numberStr := str.Itoa(numberRaw)
 
 	if numberRaw == 0 {
@@ -110,14 +119,14 @@ func List() {
 	for i := 0; i < numberRaw; i++ {
 
 		statusNum := str.Itoa(statusNumRaw)
-		statusViper := viper.GetString("tasks.task." + statusNum + "." + "status")
+		statusViper := viper.GetString(tasksString + statusNum + "." + statusStringWithoutDot)
 		sum := 1
 		numStr := str.Itoa(numRaw)
 		numRaw += sum
 		var numColor string
 		var statusTxt string
 
-		itemsNum := viper.GetInt("tasks.task." + numStr + "." + "items_current_number")
+		itemsNum := viper.GetInt(tasksString + numStr + "." + "items_current_number")
 		var hasItems bool
 
 		if itemsNum == 0 {
@@ -126,7 +135,7 @@ func List() {
 			hasItems = true
 		}
 
-		title := viper.GetString("tasks.task." + numStr + "." + "title")
+		title := viper.GetString(tasksString + numStr + "." + "title")
 
 		items := make([]string, itemsNum)
 		itemRaw := 1
@@ -147,7 +156,7 @@ func List() {
 			for i := 0; i < itemsNum; i++ {
 				numStr := str.Itoa(itemsNumRaw)
 				itemStr := str.Itoa(itemRaw)
-				items[numIt] = viper.GetString("tasks.task." + numStr + "." + "items.item." + itemStr + ".content")
+				items[numIt] = viper.GetString(tasksString + numStr + "." + itemsString + itemStr + contentString)
 				itemRaw += 1
 				numItemsRaw += 1
 				sum := 1
@@ -164,7 +173,7 @@ func List() {
 				itemStr := str.Itoa(itemStatusNumRaw)
 				bulletColor := "•"
 				itemsTxt := items[fmtItems]
-				itemStatusViper := viper.GetString("tasks.task." + numStr + ".items.item." + itemStr + ".status")
+				itemStatusViper := viper.GetString(tasksString + numStr + "." + itemsString + itemStr + statusString)
 
 				if itemStatusViper == "completed" {
 					bulletColor = misc.Green("✓")
@@ -200,8 +209,8 @@ func List() {
 
 func View(id string) {
 	viper.New()
-	taskExists := viper.Get("tasks.task." + id)
-	itemsNumViper := viper.GetInt("tasks.task." + id + ".items_current_number")
+	taskExists := viper.Get(tasksString + id)
+	itemsNumViper := viper.GetInt(tasksString + id + ".items_current_number")
 	items := make([]string, itemsNumViper)
 	var hasItems bool
 
@@ -216,10 +225,10 @@ func View(id string) {
 		return
 	}
 
-	idViper := viper.GetString("tasks.task." + id + "." + "title")
+	idViper := viper.GetString(tasksString + id + "." + "title")
 
 	txt := misc.Cyan("Title of task number " + id + ": ")
-	statusViper := viper.GetString("tasks.task." + id + "." + "status")
+	statusViper := viper.GetString(tasksString + id + "." + statusStringWithoutDot)
 	statusViperStr := strings.ToUpper(statusViper)
 	status := misc.Green("Status of task number "+id+": ") + statusViperStr
 
@@ -237,7 +246,7 @@ func View(id string) {
 		itemTxt := items[fmtItems]
 		for i := 0; i < itemsNumViper; i++ {
 			itemsNumStr := str.Itoa(itemsNumRaw)
-			items[itemRaw] = viper.GetString("tasks.task." + id + ".items.item." + itemsNumStr + ".content")
+			items[itemRaw] = viper.GetString(tasksString + id + "." + itemsString + itemsNumStr + contentString)
 
 			itemRaw += 1
 			itemsNumRaw += 1
@@ -245,7 +254,7 @@ func View(id string) {
 
 		for i := 0; i < itemsLenght; i++ {
 			itemsNumStr := str.Itoa(fmtNumRaw)
-			itemStatusViper := viper.GetString("tasks.task." + id + ".items.item." + itemsNumStr + ".status")
+			itemStatusViper := viper.GetString(tasksString + id + "." + itemsString + itemsNumStr + statusString)
 
 			if itemStatusViper == "completed" {
 				bulletColor = misc.Green("✓")
@@ -271,12 +280,12 @@ func View(id string) {
 
 func Complete(id string) {
 	viper.New()
-	numberRaw := viper.GetInt("tasks.current_number")
+	numberRaw := viper.GetInt(tksCurrNumString)
 
 	var existingTasks bool
 	var taskExists bool
 
-	taskExistsViper := viper.Get("tasks.task." + id)
+	taskExistsViper := viper.Get(tasksString + id)
 
 	if taskExistsViper == nil {
 		taskExists = false
@@ -284,7 +293,7 @@ func Complete(id string) {
 		taskExists = true
 	}
 
-	taskAlreadyCompleted := viper.GetString("tasks.task." + id + "." + "status")
+	taskAlreadyCompleted := viper.GetString(tasksString + id + "." + statusStringWithoutDot)
 
 	if numberRaw == 0 {
 		existingTasks = false
@@ -299,7 +308,7 @@ func Complete(id string) {
 	}
 
 	if existingTasks != false && taskAlreadyCompletedBool == false && taskExists == true {
-		viper.Set("tasks.task."+id+"."+"status", "completed")
+		viper.Set(tasksString+id+statusString, "completed")
 		viper.WriteConfig()
 
 		fmt.Println(misc.Green("✓ Successfully completed task, Cheers!"))
@@ -328,8 +337,8 @@ func Complete(id string) {
 
 func CompleteItem(taskId, itemId string) {
 	viper.New()
-	taskExistsViper := viper.Get("tasks.task." + taskId)
-	itemAlreadyCompleted := viper.GetString("tasks.task." + taskId + ".items.item." + itemId + ".status")
+	taskExistsViper := viper.Get(tasksString + taskId)
+	itemAlreadyCompleted := viper.GetString(tasksString + taskId + "." + itemsString  + itemId + statusString)
 
 	var taskExists bool
 	var itemAlreadyCompletedBool bool
@@ -354,8 +363,8 @@ func CompleteItem(taskId, itemId string) {
 
 	if taskExists == true && itemAlreadyCompletedBool == false {
 
-		viper.Set("tasks.task."+taskId+".items.item."+itemId+".status", "completed")
-		fmt.Println("tasks.task." + taskId + ".items.item." + itemId + ".status")
+		viper.Set(tasksString+taskId+"."+itemsString+itemId+".status", "completed")
+		fmt.Println(tasksString + taskId + "." + itemsString + itemId + statuaString)
 		viper.WriteConfig()
 		fmt.Println(misc.Green("✓ Succesfully completed item of task " + taskId))
 		return

@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// TODO: Clean useless comments
-
 package cmd
 
 import (
@@ -45,7 +43,6 @@ var cfgFiletype = []*sur.Question{
 				"TOML",
 				"JSON",
 				"HCL",
-				"INI",
 				"PROPERTIES",
 			},
 		},
@@ -95,21 +92,9 @@ var configCmd = &cobra.Command{
 				return
 			}
 
-			/*switch answers.Filetype {
-
-				case "JSON":
-				   filetype = "json"
-				case "TOML":
-				   filetype = "toml"
-				case "YAML":
-				   filetype = "yml"
-				case "HCL":
-				   filetype = "hcl"
-				case "INI":
-				   filetype = "ini"
-				case "PROPERTIES":
-				   filetype = "properties"
-			}*/
+			if answers.Filetype == "yaml" {
+				filetype = "yml"
+			}
 
 			filetype = str.ToLower(answers.Filetype)
 
@@ -126,9 +111,6 @@ var configCmd = &cobra.Command{
 
 		}
 
-		/*if erro != nil {
-			fmt.Println(erro)
-		}*/
 
 		success := create.Execute(filetype)
 
