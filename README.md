@@ -1,6 +1,10 @@
-# Description
+# Gocharm
 
-A personal project to learn how to make a **_cli_** with **_cobra_** and go
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Josh012422_utils)](https://sonarcloud.io/dashboard?id=Josh012422_utils)
+
+[![CircleCI Build](https://circleci.com/gh/Josh012422/gocharm.svg?style=svg)](https://app.circleci.com/pipelines/github/Josh012422/gocharm)
+
+A personal project to learn how to make a **_cli_** with **_cobra_** and go.
 
 Make your terminal life easier.
 
