@@ -1,0 +1,55 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2.1
+jobs:
+  build:
+    docker:
+      # specify the version
+      - image: circleci/golang:1.13
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    #### TEMPLATE_NOTE: go expects specific checkout path representing url
+    #### expecting it in the form of
+    ####   /go/src/github.com/circleci/go-tool
+    ####   /go/src/bitbucket.org/circleci/go-tool
+    working_directory: /go/src/github.com/Josh012422/gocharm
+    steps:
+      - checkout
+
+      # specify any bash command here prefixed with `run: `
+      - run: 
+          name: Get dependencies
+          command: go get -v -t -d ./...
+      - run: 
+          name: Build
+          command: go build -v ./...
+      - run:
+          name: Install
+          command: go install -v
+      - run:
+          name: Check if everything is OK
+          command: gocharm
+      - run:
+          name: SonarCloud Analysis
+          command: echo "Calling SonarCloud"
+      - sonarcloud/scan
+      - slack/status:
+              fail_only: false
+              mentions: 'Carlos Adolfo Ortiz Q., DJBlueSlime'
+              only_for_branches: master, dev
+              webhook: webhook
+
+orbs:
+   sonarcloud: sonarsource/sonarcloud@1.0.1
+   slack: circleci/slack@3.4.2
+
+workflows:
+   main:
+      jobs:
+         - build:
+              context: SonarCloud
