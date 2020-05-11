@@ -19,19 +19,19 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Josh012422/gocharm/misc"
-	"github.com/Josh012422/gocharm/commands"
 	sur "github.com/AlecAivazis/survey/v2"
+	"github.com/Josh012422/gocharm/commands"
+	"github.com/Josh012422/gocharm/misc"
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	homedir "github.com/mitchellh/go-homedir"
 )
 
 // newCmd represents the new command
 var timeCmd = &cobra.Command{
 	Use:   "time",
 	Short: "This command displays the REAL TIME of any city",
-	Long: `Thid command uses the IANA timezone database, so is the REAL TIME`,
+	Long:  `This command uses the IANA timezone database, so is the REAL TIME`,
 	Run: func(cmd *cobra.Command, args []string) {
 		check := misc.Green("✓")
 		home, erro := homedir.Dir()
@@ -43,45 +43,45 @@ var timeCmd = &cobra.Command{
 		viper.New()
 		txt := misc.Cyan("The time is: ")
 
-		tzFlag,_ := cmd.Flags().GetString("timezone")
-		hourFormatFlag,_ := cmd.Flags().GetBool("12hour")
+		tzFlag, _ := cmd.Flags().GetString("timezone")
+		hourFormatFlag, _ := cmd.Flags().GetBool("12hour")
 
-		location,_ := time.LoadLocation(tzFlag)
-		defaultTzFlag,_ := cmd.Flags().GetString("default")
+		location, _ := time.LoadLocation(tzFlag)
+		defaultTzFlag, _ := cmd.Flags().GetString("default")
 
-		if (defaultTzFlag != "") {
+		if defaultTzFlag != "" {
 
 			viper.AddConfigPath("..")
 			viper.Set("default", defaultTzFlag)
 			viper.WriteConfig()
 
-			fmt.Println(check, misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path) )
+			fmt.Println(check, misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path))
 		}
 
-		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == false) {
+		if tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == false {
 			t := time.Now().In(location)
 			t.String()
 			fmt.Println(txt + t.Format("15:04:05 pm"))
 		}
 
-		if (tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == true) {
+		if tzFlag != "" && defaultTzFlag == "" && hourFormatFlag == true {
 			t := time.Now().In(location)
 			t.String()
 			fmt.Println(txt + t.Format("3:04:05 pm"))
 		}
 
-		if (tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == false) {
+		if tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == false {
 			viperLocationRaw := viper.GetString("default")
-			viperLocation,_ := time.LoadLocation(viperLocationRaw)
+			viperLocation, _ := time.LoadLocation(viperLocationRaw)
 
 			t := time.Now().In(viperLocation)
 			t.String()
 			fmt.Println(txt + t.Format("15:04:05 pm"))
 		}
 
-		if (tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == true) {
+		if tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == true {
 			viperLocationRaw := viper.GetString("default")
-			viperLocation,_ := time.LoadLocation(viperLocationRaw)
+			viperLocation, _ := time.LoadLocation(viperLocationRaw)
 
 			t := time.Now().In(viperLocation)
 			t.String()
@@ -89,21 +89,20 @@ var timeCmd = &cobra.Command{
 		}
 
 	},
-
 }
 
 var timeCompareCmd = &cobra.Command{
-	Use: "compare",
+	Use:   "compare",
 	Short: "Returns two timezones instead of one",
-	Long: `Returns two timezones so you can compare one to each other`,
-	Run: func(cmd *cobra.Command, args[]string){
+	Long:  `Returns two timezones so you can compare one to each other`,
+	Run: func(cmd *cobra.Command, args []string) {
 		tz1, _ := cmd.Flags().GetString("timezone")
 		tz2, _ := cmd.Flags().GetString("2timezone")
 		hff, _ := cmd.Flags().GetBool("12hour")
 		tz1sur := ""
 		tz2sur := ""
-		var tzo1, tzo2 string;
-		var err error;
+		var tzo1, tzo2 string
+		var err error
 		/*var errTz1 error;
 		var errTz2 error;*/
 
@@ -138,7 +137,6 @@ var timeCompareCmd = &cobra.Command{
 			_ = sur.AskOne(tz2survey, &tz2sur)
 			tz2 = tz2sur
 		}
-
 
 		tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
 

@@ -16,9 +16,8 @@ limitations under the License.
 package cmd
 
 import (
-
-	"github.com/spf13/cobra"
 	"github.com/Josh012422/gocharm/commands"
+	"github.com/spf13/cobra"
 )
 
 // randomCmd represents the random command
@@ -38,7 +37,7 @@ var randomCmd = &cobra.Command{
 }
 
 var randomDecisionCmd = &cobra.Command{
-	Use: "decision -1 {<decision 1>} -2 {<decision 2>}",
+	Use:   "decision -1 {<decision 1>} -2 {<decision 2>}",
 	Short: "To help you take decisions",
 	Long: `This command is here to help you, undecise person, take decisions. For example:
 

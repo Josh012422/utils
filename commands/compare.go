@@ -1,18 +1,17 @@
 package command
 
 import (
-//	"fmt"
+	//	"fmt"
 	"time"
-//	"errors"
+	//	"errors"
 	"os"
-
-//	"github.com/Josh012422/utils/misc"
-//	"github.com/spf13/viper"
+	//	"github.com/Josh012422/utils/misc"
+	//	"github.com/spf13/viper"
 )
 
-func ConvertTime (tz1 string, tz2 string, hourFormat bool) (string, string, error) {
+func ConvertTime(tz1 string, tz2 string, hourFormat bool) (string, string, error) {
 	loc1raw := tz1
-	loc1, err1:= time.LoadLocation(loc1raw)
+	loc1, err1 := time.LoadLocation(loc1raw)
 
 	if err1 != nil {
 		return "", "", err1
@@ -30,13 +29,13 @@ func ConvertTime (tz1 string, tz2 string, hourFormat bool) (string, string, erro
 	if hourFormat == true {
 		t1 := time.Now().In(loc1)
 		t1.String()
-//		t1.Format("3:04:05 PM")
+		//		t1.Format("3:04:05 PM")
 
 		t2 := time.Now().In(loc2)
 		t2.String()
-//		t2.Format("3:04:05 PM")
+		//		t2.Format("3:04:05 PM")
 
-		return t1.Format("3:04:05 PM"), t2.Format("3:04:05 PM"),nil
+		return t1.Format("3:04:05 PM"), t2.Format("3:04:05 PM"), nil
 		os.Exit(0)
 	}
 

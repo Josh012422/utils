@@ -3,7 +3,7 @@ package command
 import "fmt"
 import "github.com/spf13/viper"
 
-var FT string;
+var FT string
 
 func SetFt(filetype string) {
 	viper.New()
@@ -14,7 +14,7 @@ func SetFt(filetype string) {
 	fmt.Println(filetype, FT)
 }
 
-func GetFt () string {
+func GetFt() string {
 	viper.New()
 	FT = viper.GetString("config.filetype")
 	return FT

@@ -33,5 +33,6 @@ jobs:
     - name: Build
       run: go build -v .
 
-
+    - name: Sorry
+      run: echo "Sorry for the double CI"
 
