@@ -1,3 +1,9 @@
+# Full guide
+
+You may be thinking: "Why put all the commands in another file than the README"
+
+Well the answer to that is that I don't want to extend the README so much, The commands in the README are the 3 ones that I made first so... that is why they get that place.
+
 # Random Command
 
 This command is here to help you make decisions (if you are willing to accept the result), also can generate an __pseudo-random__ number between the numbers that you want, Look it:
@@ -49,12 +55,12 @@ Well that's it for this __command.__
 
 This command is here to help you measure time, Look it, id does not bite:
 
-```golang
+```shell
 $ gocharm cron
 ```
 As simple at that, Look at the output:
 
-```golang
+```shell
 Cronometer running...
 Hit enter to stop.
 
@@ -64,3 +70,21 @@ Time elapsed: 1m30.274817462s
 ```
 
 Well, another command documented.
+
+# Timer Command
+
+This command was born for your baking needs, Just look at your future with him:
+
+```shell
+$ gocharm timer -s 50 -m 30 -o 2
+Timer fired!
+Press enter to stop it.
+
+// *Inhales deeply* TWO hours THIRTY minutes and FIFTY minutes later *Exales*
+
+Timer expired!
+Press enter to continue
+```
+The "-s" switch is for seconds, "-m" for... well... minutes (I think is obvious, the "m".), and "-o" for hours. Why "o" for hours, and why not a beutiful "h". Well it's because "h" already is for help flag.
+
+And that's it, yet another command documented.
