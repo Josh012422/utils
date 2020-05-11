@@ -17,11 +17,8 @@ package cmd
 
 import (
 	"fmt"
-	"errors"
 	"time"
 	"os"
-	"log"
-	str "strconv"
 
 	"github.com/spf13/cobra"
 	"github.com/Josh012422/gocharm/misc"
@@ -30,41 +27,42 @@ import (
 // timerCmd represents the timer command
 var timerCmd = &cobra.Command{
 	Use:   "timer",
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 1 {
-			return errors.New("Please provide a number of seconds")
-		}
-
-		return nil
-	},
-
 	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long: `A simple timer for your baking needs, Example:
+	    
+	       $ gocharm timer -s 30 -m 3 -o 3
+	       Note: "-o" equals hours, because "-h" means help.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		duration, err := str.Atoi(args[0])
+		var finalDuration int
+		seconds, _ := cmd.Flags().GetInt("seconds")
+		minutes, _ := cmd.Flags().GetInt("minutes")
+		hours, _ := cmd.Flags().GetInt("hours")
 
-		if err != nil {
-			log.Fatal(err)
+		for i := 0; i < 1; i++{
+			finalDuration += seconds
 		}
 
-		timer := time.NewTimer(time.Duration(duration) * time.Second)
-		fmt.Printf("Timer fired!\n%s\n", misc.Red("Press enter to stop it."))
+		for i := 0; i < minutes; i++{
+			finalDuration += 60
+		}
+
+		for i := 0; i < hours; i++{
+			finalDuration += 3600
+		}
+
+		timer := time.NewTimer(time.Duration(finalDuration) * time.Second)
+		fmt.Printf("Timer fired!\n%s\n\n" + misc.Bold(misc.Cyan("Seconds: ")) + "%d\n" + misc.Bold(misc.Cyan("Minutes: ")) + "%d\n" + misc.Bold(misc.Cyan("Hours: ")) + "%d\n", misc.Red("Press enter to stop it."), seconds, minutes, hours)
 
 		go func (){
 			<-timer.C
-			fmt.Printf("\nTimer expired!\n%s", misc.Red("Press enter to continue!"))
+			fmt.Printf("\nTimer expired!\n%s", misc.Bold(misc.Red("Press enter to continue!")))
 			_ = waitForEnter(os.Stdin)
 		}()
 
 		_ = waitForEnter(os.Stdin)
 		stop := timer.Stop()
 		if stop {
-			fmt.Printf("Timer stopped!\n%s\n", misc.Red("Exiting..."))
+			fmt.Printf("Timer stopped!\n%s\n", misc.Bold(misc.Red("Exiting...")))
 			os.Exit(0)
 		}
 	},
@@ -72,6 +70,9 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(timerCmd)
+	timerCmd.Flags().IntP("seconds", "s", 1, "The number of seconds for the timer")
+	timerCmd.Flags().IntP("minutes", "m", 0, "The number of minutes for the timer")
+	timerCmd.Flags().IntP("hours", "o", 0, "The number of hours for timer")
 
 	// Here you will define your flags and configuration settings.
 
