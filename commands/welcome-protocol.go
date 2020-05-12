@@ -165,7 +165,7 @@ func Welcome () {
 
 			fmt.Printf("There MUST be a file name '.gocharm.yml' (Note: .yml should be replaced by the filetype you chosed when you were prompted), The file should look something like this:\n\n")
 
-			fmt.Printf("%s\n\n(Yeah I now, is very ugly)\nThat syntax is for YAML but applies for the rest.", cfgFileStr)
+			fmt.Printf("%s\n\n(Yeah I now, is very ugly)\nThat syntax is for YAML but applies for the rest.\n", cfgFileStr)
 
 			Continue(st)
 
