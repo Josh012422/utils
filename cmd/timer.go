@@ -27,7 +27,7 @@ import (
 // timerCmd represents the timer command
 var timerCmd = &cobra.Command{
 	Use:   "timer",
-	Short: "A brief description of your command",
+	Short: "A timer for your baking needs.",
 	Long: `A simple timer for your baking needs, Example:
 	    
 	       $ gocharm timer -s 30 -m 3 -o 3

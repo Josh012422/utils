@@ -65,8 +65,10 @@ var tasksAddCmd = &cobra.Command{
 
 var tasksAddItemCmd = &cobra.Command{
 	Use:   "item -c {<content>} -t {<task number>}",
-	Short: "Tp",
-	Long:  `Tp`,
+	Short: "To add a item to a existing task",
+	Long:  `This command is to add a item like a checklist to an existing task:
+
+	        $ gocharm tasks add item -t {<task number>}`,
 	Run: func(cmd *cobra.Command, args []string) {
 		content, _ := cmd.Flags().GetString("content")
 		task, _ := cmd.Flags().GetInt("task")
@@ -136,8 +138,10 @@ var tasksCompleteItemCmd = &cobra.Command{
 		return nil
 	},
 
-	Short: "Tp",
-	Long:  `Tp`,
+	Short: "To mark as complete an item of an existing task",
+	Long:  `This command is used to complete a item of a checklist of a task:
+	       
+	        $ gocharm tasks complete {<task number>} <{item number>}`,
 	Run: func(cmd *cobra.Command, args []string) {
 		taskNumber := args[0]
 		itemNumber := args[1]
