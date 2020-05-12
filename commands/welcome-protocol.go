@@ -14,6 +14,23 @@ import (
 func Welcome () {
 	viper.New()
 	name := ""
+	exampleStr := `"America/New_York"`
+	cfgFileStr := `
+	config:
+	  created: true
+	  filetype: {config file filetype}
+	default: {default timezone you were prompted}
+	name: {name}
+        tasks:
+	  current_number: 1 (This number is based on the number of existing tasks.)
+	  future_number: 2 (This one will be the next number for the next task you create.)
+	  task:
+	    "1":
+	      items_current_number: 0 (Same as tasks's current_number but for items)
+	      items_future_number: 1 (Same)
+	      status: uncompleted (<-- Please dont modify this)
+	      title: Do things (The title of the task)
+	`
 	nameViper := viper.GetString("name")
 	guideAccepted := false
 	st := os.Stdin
@@ -70,7 +87,7 @@ func Welcome () {
 
 			fmt.Println(misc.Yellow("Press enter to continue"))
 
-			fmt.Printf("A demonstration: \n\n$ gocharm time -t %s -1\n", "{<string in format Continent/City>}")
+			fmt.Printf("A demonstration: \n\n$ gocharm time -t %s -1\n", exampleStr)
 
 			Continue(st)
 
@@ -87,10 +104,77 @@ func Welcome () {
 			fmt.Printf("For example: \n\n$ gocharm date -t %s\n", "{<same as time command>}")
 
 			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Third command, The tasks command. (This one is long)")))
+			fmt.Println("When you summon me with this command, I will request to you use one of the 4 options you have available.")
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Tasks command: The add subcommand.")))
+
+			fmt.Printf("When you summon me with the tasks command and this subcommand, I will add a new task to list: \n\n$ gocharm tasks add\n")
+
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Tasks command: Add subcommand: Item Sub...subcommand?")))
+
+			fmt.Println("When you summon me with tasks command, add subcommand and item subsubcommand (That sounds weird), I will add a item to the task provided")
+
+			Continue(st)
+
+			fmt.Printf("For example: \n\n$ gocharm tasks add item -t [task number]\n")
+
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Tasks command: List subcommand.")))
+			fmt.Println("When you summon with tasks command and with this command, I will list you all of your pending tasks (And completed ones).")
+			Continue(st)
+			fmt.Printf("See: \n\n$ gocharm tasks list\n")
+
+			fmt.Println(misc.Bold(misc.Cyan("Tasks command: View subcommand")))
+			fmt.Println("When you call me with tasks command and this subcommand, I will bring you all the information of the task provided")
+			Continue(st)
+
+			fmt.Printf("Look: \n\n$ gocharm tasks view [task number]\n")
+
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Tasks command: Complete subcommand.")))
+
+			fmt.Println("When you call me with tasks command and this subcommand (I'm tired of saying that), I will mark as completed the task provided.")
+
+			Continue(st)
+
+			fmt.Printf("Ehmm... Ahhh... Dont know what to say, already used look and see... Well... Look: \n\n$ gocharm tasks complete [task number]\n")
+
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Tasks command: Complete subcommand: Item... (Oh Noo... Here we go again) Subsubcommand.")))
+			fmt.Println("When you... At this point you must know already, I will mark as completed the item of the task provided.")
+			Continue(st)
+
+			fmt.Printf("...See: \n\n$ gocharm tasks complete item [task number] [item number]\n")
+
+			Continue(st)
+
+			fmt.Println("Uff, That one was very long, here goes a bonus.")
+
+			Continue(st)
+
+			fmt.Println("To eliminate tasks from the list itself (Not just mark it as completed), you must go to the file where all this tasks is being saved.")
+			Continue(st)
+
+			fmt.Printf("There MUST be a file name '.gocharm.yml' (Note: .yml should be replaced by the filetype you chosed when you were prompted), The file should look something like this:\n\n")
+
+			fmt.Printf("%s\n\n(Yeah I now, is very ugly)\nThat syntax is for YAML but applies for the rest.", cfgFileStr)
+
+			Continue(st)
+
+			fmt.Println("To eliminate tasks, just erase all the number of task key and rest one to tasks's current_number and future_number")
+
 		}
 
 		if guideAccepted == false {
-			fmt.Printf("As you want, %s, bye.\n", nameViper)
+			fmt.Printf("As you want %s, bye.\n", nameViper)
 		}
 
 
