@@ -23,13 +23,8 @@ import (
 // welcomeCmd represents the welcome command
 var welcomeCmd = &cobra.Command{
 	Use:   "welcome",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "A command to welcome you.",
+	Long: `Hi, I am gocharm and this command will welcome you to this awesome tool and give a guide (If you want) through this CLI.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		command.Welcome()
 	},

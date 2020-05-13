@@ -28,7 +28,7 @@ func Welcome () {
 	    "1":
 	      items_current_number: 0 (Same as tasks's current_number but for items)
 	      items_future_number: 1 (Same)
-	      status: uncompleted (<-- Please dont modify this)
+	      status: uncompleted (<-- Please DO NOT modify this.)
 	      title: Do things (The title of the task)
 	`
 	nameViper := viper.GetString("name")
@@ -171,6 +171,60 @@ func Welcome () {
 
 			fmt.Println("To eliminate tasks, just erase all the number of task key and rest one to tasks's current_number and future_number")
 
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Fourth command, The cron command.")))
+			fmt.Println("When you call me with this command I will start running a cronometer, pressing enter gives me the signal to stop it and give you the time elapsed.")
+
+			Continue(st)
+
+			fmt.Printf("Watch: \n\n$ gocharm cron\n\nNote: If you want to see the output, open another shell session and execute them.\n")
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Fifth command, The random command."
+			fmt.Println("When you know what, I will do a series of very complicated and hard math operations to give you a pseudo-random number between 0 and 99 or if you want you can provide the min and max number.")
+
+			Continue(st)
+
+			fmt.Printf("Like: \n\n$ gocharm random -1 {<min number>} -2 {<max number>}\n")
+
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Random command: Decision subcommand")))
+
+			fmt.Println("From now on I will only say what commands and subcommands (or maybe subsubcommands, subsubsubcommands and so on) do. What this subcommand do: This subcommand gives me the signal to do a series of... you know what to decide between the 2 things you want me to decide from, (MUST BE 2) for you.")
+
+			Continue(st)
+
+			fmt.Printf("See: \n\n$ gocharm random decision -1 '{<decision number 1>}' -2 '{<decision number 2>}\n\n Note: You can use double quotes. DO NOT use ``.\n")
+
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Sixth command, The timer command.")
+
+			fmt.Println("What this command do: This command gives me another signal to start a timer with the seconds, minutes, and hours provided. (Note: If you do not provide anything then the default will be 1 second)")
+
+			Continue(st)
+
+			fmt.Printf("Look: \n\n$ gocharm timer -s 24 -m 44 -o 7\n\nYAN (Yet another note): The '-o' switch is to not confuse me because '-h' switch means help sooo... That confuses me.\n")
+
+			Continue(st)
+
+			fmt.Println(misc.Bold(misc.Cyan("Seventh command, The config command")
+
+			fmt Println("What this command do: Gives me a signal to create a configuration file, I love configuration files it tells me how to do things so I don't have to be worried figuring out things.")
+
+			Continue(st)
+
+			fmt.Printf("Love it: \n\n$ gocharm config\n")
+
+			Continue(st)
+
+			fmt.Printf("And that's it, Bye %s, Hope you understood everything.", nameViper)
+
+			os.Exit(0)
+			return
+
 		}
 
 		if guideAccepted == false {
@@ -194,6 +248,7 @@ func Continue (r io.Reader) error {
 	err := waitForEnter(r)
 
 	if err != nil {
+		os.Exit(1)
 		return err
 	}
 
