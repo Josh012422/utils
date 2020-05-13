@@ -105,6 +105,7 @@ var tasksViewCmd = &cobra.Command{
 
 	Short: "For view a single task",
 	Long:  `Use this command to view a single task instead of all`,
+	SilenceUsage: true,
 	Run: func(cmd *cobra.Command, args []string) {
 		command.View(args[0])
 	},
