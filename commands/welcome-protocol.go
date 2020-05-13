@@ -181,7 +181,7 @@ func Welcome () {
 			fmt.Printf("Watch: \n\n$ gocharm cron\n\nNote: If you want to see the output, open another shell session and execute them.\n")
 			Continue(st)
 
-			fmt.Println(misc.Bold(misc.Cyan("Fifth command, The random command."
+			fmt.Println(misc.Bold(misc.Cyan("Fifth command, The random command.")))
 			fmt.Println("When you know what, I will do a series of very complicated and hard math operations to give you a pseudo-random number between 0 and 99 or if you want you can provide the min and max number.")
 
 			Continue(st)
@@ -200,7 +200,7 @@ func Welcome () {
 
 			Continue(st)
 
-			fmt.Println(misc.Bold(misc.Cyan("Sixth command, The timer command.")
+			fmt.Println(misc.Bold(misc.Cyan("Sixth command, The timer command.")))
 
 			fmt.Println("What this command do: This command gives me another signal to start a timer with the seconds, minutes, and hours provided. (Note: If you do not provide anything then the default will be 1 second)")
 
@@ -210,9 +210,9 @@ func Welcome () {
 
 			Continue(st)
 
-			fmt.Println(misc.Bold(misc.Cyan("Seventh command, The config command")
+			fmt.Println(misc.Bold(misc.Cyan("Seventh command, The config command")))
 
-			fmt Println("What this command do: Gives me a signal to create a configuration file, I love configuration files it tells me how to do things so I don't have to be worried figuring out things.")
+			fmt.Println("What this command do: Gives me a signal to create a configuration file, I love configuration files it tells me how to do things so I don't have to be worried figuring out things.")
 
 			Continue(st)
 
@@ -220,7 +220,7 @@ func Welcome () {
 
 			Continue(st)
 
-			fmt.Printf("And that's it, Bye %s, Hope you understood everything.", nameViper)
+			fmt.Printf("And that's it, Bye %s, Hope you understood everything.\n", nameViper)
 
 			os.Exit(0)
 			return
