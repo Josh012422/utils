@@ -142,7 +142,7 @@ var tasksCompleteItemCmd = &cobra.Command{
 	Short: "To mark as complete an item of an existing task",
 	Long:  `This command is used to complete a item of a checklist of a task:
 	       
-	        $ gocharm tasks complete {<task number>} <{item number>}`,
+	       $ gocharm tasks complete {<task number>} {<item number>}`,
 	Run: func(cmd *cobra.Command, args []string) {
 		taskNumber := args[0]
 		itemNumber := args[1]

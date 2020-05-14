@@ -364,7 +364,6 @@ func CompleteItem(taskId, itemId string) {
 	if taskExists == true && itemAlreadyCompletedBool == false {
 
 		viper.Set(tasksString+taskId+"."+itemsString+itemId+".status", "completed")
-		fmt.Println(tasksString + taskId + "." + itemsString + itemId + statusString)
 		viper.WriteConfig()
 		fmt.Println(misc.Green("✓ Succesfully completed item of task " + taskId))
 		return
