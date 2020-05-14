@@ -1,19 +1,43 @@
 # Gocharm
 
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Josh012422_utils)](https://sonarcloud.io/dashboard?id=Josh012422_utils)
-
-[![CircleCI Build](https://circleci.com/gh/Josh012422/gocharm.svg?style=svg)](https://app.circleci.com/pipelines/github/Josh012422/gocharm)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Josh012422_utils)](https://sonarcloud.io/dashboard?id=Josh012422_utils) [![CircleCI Build](https://circleci.com/gh/Josh012422/gocharm.svg?style=svg)](https://app.circleci.com/pipelines/github/Josh012422/gocharm)
 
 A personal project to learn how to make a **_cli_** with **_cobra_** and go.
 
 Make your terminal life easier.
 
+# Feedback
+
+If you want any feature or command in particular you can open a issue or write me: djblueslime11@gmail.com
+
+Also if you want you can fill this [form.](https://forms.gle/8fAoibD6MuwoNphBA)
+
+# Contributing
+
+If you spotted a bug, I encourage you to open a issue or if you want you can fork the repo, fix it, then create a pull request.
+
+Also if you added a new feature or something you can do the same proccess.
+
+Another great way to contribute is creating tests files, I don't know how to do that so that will help me A LOT.
+
 # Installation
 
-To install, clone the repo then simply run:
+To install, clone the repo: 
+
+### HTTPS
+```
+https://github.com/Josh012422/gocharm.git
+```
+
+### SSH
+```
+git@github.com:Josh012422/gocharm.git
+```
+
+That will help you if you are in mobile using TERMUX, then simply run:
 
 ```bash
-$ make
+$ cd path/to/repo && make
 ```
 
 Let it finish, then:
@@ -22,14 +46,14 @@ Let it finish, then:
 $ echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bash_profile
 ```
 
-If you don't have **_make_** installed in your machine, then search Google.
+If you don't have **_make_** installed, search Google how to install it. (It is IMPORTANT that is GNU Make)
 
-**Hint:** If you're on '**_Windows_**' then install choco, then run:
+**Hint:** If you're on '**_Windows_**' install choco (Search Google how), afterwards run:
 
 ```bash
 choco install make
 ```
-**_Hint:_** If you are using termux, just run:
+**_Hint:_** If you are using **__TERMUX__**, just run:
 
 ```bash
 $ pkg install make
@@ -37,10 +61,16 @@ $ pkg install make
 
 # Usage
 
-The '**_main_**' command is `gocharm`, there are currently two commands (There will be more), a list:
+The '**_main_**' command is `gocharm`, there are currently eight commands (There will be more), a list:
 
 1. time
 2. tasks
+3. config
+4. cron
+5. timer
+6. welcome
+7. random
+8. date
 
 Each one with his own functionality.
 
