@@ -20,6 +20,12 @@ Also if you added a new feature or something you can do the same proccess.
 
 Another great way to contribute is creating tests files, I don't know how to do that so that will help me A LOT.
 
+# Supporting
+
+This project is COMPLETELY FREE and open-source so if you want to make me a generous donation, you can do it [here.](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=57L8EZDJATSKL&source=url)
+
+Or you can click the button that says SPONSOR above. (More options for sponsor will be available in the future)
+
 # Installation
 
 To install, clone the repo: 
@@ -63,14 +69,14 @@ $ pkg install make
 
 The '**_main_**' command is `gocharm`, there are currently eight commands (There will be more), a list:
 
-1. time
-2. tasks
-3. config
-4. cron
-5. timer
-6. welcome
-7. random
-8. date
+1. __time__
+2. __tasks__
+3. __config__
+4. __cron__
+5. __timer__
+6. __welcome__
+7. __random__
+8. __date__
 
 Each one with his own functionality.
 
