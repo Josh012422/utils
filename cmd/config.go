@@ -61,7 +61,10 @@ var cfgFiletype = []*sur.Question{
 var configCmd = &cobra.Command{
 	Use:   "config",
 	Short: "Creates a config file",
-	Long:  `Create a config file if not exists`,
+	Long:  `Create a config file if it not currently exists
+
+	        $ gocharm config -f <filetype>
+		If "-f" not provided will prompt filetype.`,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		fmt.Println(misc.Gray("Creating config file..."))
 	},

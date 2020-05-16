@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/viper"
 	"github.com/Josh012422/gocharm/misc"
@@ -15,15 +16,24 @@ var Id int
 func Info (user string) {
 	viper.New()
 	name := ""
-	nameViperExists := viper.Get(user + ".name")
+	nameViperExists := viper.Get("users." + user + ".user.name")
+	userExistsViper := viper.Get("users." + user)
 	nameExists := true
+
+	fmt.Println(nameViperExists, userExistsViper, "users." + user + ".user.name", "users." + user)
+
+	if userExistsViper == nil {
+		fmt.Println(misc.Red("That user does not exists."))
+		os.Exit(5)
+		return
+	}
 
 	if nameViperExists == nil {
 		nameExists = false
 	}
 
 	if nameViperExists != nil {
-		name = viper.GetString("users." + user)
+		name = viper.GetString("users." + user + ".user.name")
 	}
 
 	if name == "" && nameExists == false {
@@ -65,6 +75,7 @@ func Create () {
 	Id = idRaw
 	viper.Set("users." + name + ".user.current", idRawViper)
 	viper.Set("users." + name + ".user.id", idRawViper)
+	viper.Set("users." + name + ".user.name", name)
 	viper.Set("user_logged_in", true)
 	viper.Set("user_current", name)
 	viper.Set("users_current_number", idRaw)

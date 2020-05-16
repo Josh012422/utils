@@ -47,6 +47,10 @@ var userInfoCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		user, _ := cmd.Flags().GetString("name")
 
+		if user == "" {
+			user = args[0]
+		}
+
 		command.Info(user)
 	},
 }
