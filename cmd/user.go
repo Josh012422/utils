@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/Josh012422/gocharm/commands"
@@ -34,7 +35,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(misc.Bold(misc.Red("Please use one the following commands: info, change, view, use.")))
+		fmt.Println(misc.Bold(misc.Red("Please use one the following commands: info, setting, view, use.")))
 	},
 }
 
@@ -64,12 +65,32 @@ var userCreateCmd = &cobra.Command{
 	},
 }
 
+var userSettingCmd = &cobra.Command{
+	Use: "setting",
+	Short: "TEMPORAL DEV PLACEHOLDER",
+	Long: `TEMPORAL DEV PLACEHOLDER`,
+	Run: func(cmd *cobra.Command, args []string) {
+		user, _ := cmd.Flags().GetString("user")
+
+		if user == "" {
+			fmt.Println(misc.Bold(misc.Red("Please provide a user name")))
+			os.Exit(1)
+		}
+
+		command.Change(user)
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(userCmd)
 	userCmd.AddCommand(userInfoCmd)
 	userCmd.AddCommand(userCreateCmd)
+	userCmd.AddCommand(userSettingCmd)
 
 	userInfoCmd.Flags().StringP("name", "n", "", "The name of user to retrieve info from")
+
+	userSettingCmd.Flags().StringP("user", "u", "", "The name of the user to change the setting")
+
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

@@ -101,6 +101,10 @@ var configCmd = &cobra.Command{
 
 			filetype = str.ToLower(answers.Filetype)
 
+			viper.Set("config.created", true)
+			viper.Set("config.filetype", filetype)
+			viper.WriteConfig()
+
 			tz := &sur.Input{
 				Message: "Default Timezone:",
 			}
