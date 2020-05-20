@@ -33,7 +33,6 @@ func createFile(filetype string) bool {
 
 	if fileExists != nil {
 		fmt.Println(misc.Yellow("✗"), misc.Red("Error: Config file already exists in:"), misc.Yellow(path))
-		os.Exit(0)
 		return true
 	}
 
@@ -48,6 +47,7 @@ func createFile(filetype string) bool {
 		viper.Set("tasks.current_number", 0)
 		viper.Set("users_current_number", 0)
 		viper.Set("users_future_number", 1)
+		viper.Set("user_logged_in", false)
 		viper.WriteConfig()
 		os.Exit(0)
 		return true

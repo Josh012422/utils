@@ -50,9 +50,9 @@ var timeCmd = &cobra.Command{
 		defaultTzFlag, _ := cmd.Flags().GetString("default")
 
 		if defaultTzFlag != "" {
-
+			currUser := viper.GetString("user_current")
 			viper.AddConfigPath("..")
-			viper.Set("default", defaultTzFlag)
+			viper.Set("users." + currUser + ".user.defaulttimezone", defaultTzFlag)
 			viper.WriteConfig()
 
 			fmt.Println(check, misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path))

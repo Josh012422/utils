@@ -20,6 +20,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/Josh012422/gocharm/commands"
 	"github.com/Josh012422/gocharm/misc"
 )
@@ -70,9 +71,18 @@ var userSettingCmd = &cobra.Command{
 	Short: "TEMPORAL DEV PLACEHOLDER",
 	Long: `TEMPORAL DEV PLACEHOLDER`,
 	Run: func(cmd *cobra.Command, args []string) {
+		viper.New()
 		user, _ := cmd.Flags().GetString("user")
+		anyUserExistsViper := viper.Get("user_current")
+		handledEmptyFlag := false
 
-		if user == "" {
+		if user == "" && anyUserExistsViper != nil {
+			user = viper.GetString("user_current")
+			fmt.Println(misc.Bold(misc.Yellow("Defaulting to " + user)))
+			handledEmptyFlag = true
+		}
+
+		if user == "" && handledEmptyFlag == false {
 			fmt.Println(misc.Bold(misc.Red("Please provide a user name")))
 			os.Exit(1)
 		}
