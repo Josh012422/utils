@@ -91,15 +91,29 @@ var userSettingCmd = &cobra.Command{
 	},
 }
 
+var userUseCmd = &cobra.Command{
+	Use: "use",
+	Short: "TEMPORAL DEV PLACEHOLDER",
+	Long: `TEMPORAL DEV PLACEHOLDER`,
+	Run: func(cmd *cobra.Command, args []string) {
+		user, _ := cmd.Flags().GetString("user")
+
+		command.Use(user)
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(userCmd)
 	userCmd.AddCommand(userInfoCmd)
 	userCmd.AddCommand(userCreateCmd)
 	userCmd.AddCommand(userSettingCmd)
+	userCmd.AddCommand(userUseCmd)
 
 	userInfoCmd.Flags().StringP("name", "n", "", "The name of user to retrieve info from")
 
 	userSettingCmd.Flags().StringP("user", "u", "", "The name of the user to change the setting")
+
+	userUseCmd.Flags().StringP("user", "u", "", "The user to use.")
 
 	// Here you will define your flags and configuration settings.
 

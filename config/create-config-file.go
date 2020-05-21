@@ -43,8 +43,8 @@ func createFile(filetype string) bool {
 		}
 		defer file.Close()
 		fmt.Println(misc.Cyan("Config file created succesfully at"), misc.Green(path))
-		viper.Set("tasks.future_number", 1)
-		viper.Set("tasks.current_number", 0)
+		/*viper.Set("tasks.future_number", 1)
+		viper.Set("tasks.current_number", 0)*/
 		viper.Set("users_current_number", 0)
 		viper.Set("users_future_number", 1)
 		viper.Set("user_logged_in", false)

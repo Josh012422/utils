@@ -86,7 +86,9 @@ func Create () {
 	viper.Set("users." + name + ".user.current", idRawViper)
 	viper.Set("users." + name + ".user.id", idRawViper)
 	viper.Set("users." + name + ".user.name", name)
-	viper.Set("users." + name + ".user.defaulttimezone", defaultTimeZone)
+	viper.Set("users." + name + ".user.default_timezone", defaultTimeZone)
+	viper.Set("users." + name + ".user.tasks.tasks_future_number", 1)
+	viper.Set("users." + name + ".user.tasks.tasks_current_number", 0)
 	viper.Set("user_logged_in", true)
 	viper.Set("user_current", name)
 	viper.Set("users_current_number", idRaw)
@@ -94,10 +96,11 @@ func Create () {
 	idRaw += 1
 	viper.Set("users_future_number", idRaw)
 	viper.WriteConfig()
+
+	fmt.Println(misc.Bold(misc.Green("✓ Succcessfully created new user with name " + name)))
 }
 
 func Change (user string) {
-//	fmt.Println(misc.Bold(misc.Yellow("Proccessing...")))
 	viper.New()
 	currName := viper.GetString("users." + user + ".user.name")
 	currDefaultTz := viper.GetString("users." + user + ".user.defaultTimezone")
@@ -197,7 +200,7 @@ func Change (user string) {
 
 			if confirmedChange == true {
 				userLower := str.ToLower(user)
-				viper.Set("users." + userLower + ".user.defaulttimezone", newDefaultTz)
+				viper.Set("users." + userLower + ".user.default_timezone", newDefaultTz)
 				viper.WriteConfig()
 				fmt.Println(misc.Bold(misc.Green("✓ Successfully changed " + user + "'s default timezone")))
 
@@ -219,8 +222,9 @@ func Change (user string) {
 func Use (user string) {
 	viper.New()
 	userExistsViper := viper.Get("users." + user)
+	userNormalized := viper.GetString("users." + user + ".user.name")
 	currUser := viper.GetString("user_current")
-	userTxt := misc.Bold(misc.Green("New current user"))
+	userTxt := misc.Bold(misc.Green("New current user!: " + userNormalized))
 	var confirmed bool
 
 	if userExistsViper == nil {
@@ -229,16 +233,24 @@ func Use (user string) {
 		return
 	}
 
+	userInput := &sur.Input{
+		Message: "User:",
+	}
+
+	if user == "" {
+		_ = sur.AskOne(userInput, &user)
+	}
+
+	fmt.Printf("\nCurrent user: " + currUser + "\n%s\n\n", userTxt)
+
 	confirmQst := &sur.Confirm{
 		Message: "Are you sure of changing user?",
 	}
 
+	_ = sur.AskOne(confirmQst, &confirmed)
+//	errStr := err.Error()
 
-	fmt.Printf("\nCurrent user: " + currUser + "\n%s\n\n", userTxt)
-
-	err := sur.AskOne(confirmQst, &confirmed)
-
-	if err.Error() == "interrupt" {
+	/*if errStr == "interrupt" {
 		fmt.Println(misc.Bold(misc.Red("Proccess was interrupted...")))
 		fmt.Println("Exiting...")
 		os.Exit(1)
@@ -250,14 +262,14 @@ func Use (user string) {
 		fmt.Println("Exiting...")
 		os.Exit(1)
 		return
-	}
+	}*/
 
 
 	if confirmed == true {
-		viper.Set("user_current", user)
+		viper.Set("user_current", userNormalized)
 		viper.WriteConfig()
 
-		fmt.Println("Current user is now " + user + ".")
+		fmt.Println("Current user is now " + userNormalized + ".")
 		fmt.Println(misc.Bold(misc.Green("✓ Successfully changed current user")))
 		os.Exit(0)
 		return
