@@ -70,7 +70,7 @@ var timerCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(timerCmd)
-	timerCmd.Flags().IntP("seconds", "s", 1, "The number of seconds for the timer")
+	timerCmd.Flags().IntP("seconds", "s", 0, "The number of seconds for the timer")
 	timerCmd.Flags().IntP("minutes", "m", 0, "The number of minutes for the timer")
 	timerCmd.Flags().IntP("hours", "o", 0, "The number of hours for timer")
 

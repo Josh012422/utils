@@ -25,6 +25,7 @@ import (
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	str "strconv"
 )
 
 // newCmd represents the new command
@@ -52,7 +53,7 @@ var timeCmd = &cobra.Command{
 
 		if defaultTzFlag != "" {
 			viper.AddConfigPath("..")
-			viper.Set("users." + currUser + ".user.default_timezone", defaultTzFlag)
+			viper.Set("users."+currUser+".user.default_timezone", defaultTzFlag)
 			viper.WriteConfig()
 
 			fmt.Println(check, misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path))
@@ -101,8 +102,11 @@ var timeCompareCmd = &cobra.Command{
 		hff, _ := cmd.Flags().GetBool("12hour")
 		tz1sur := ""
 		tz2sur := ""
-		var tzo1, tzo2 string
-		var err error
+		var (
+			tzo1, tzo2 string
+			err        error
+		)
+		var diff int
 
 		if tz1 == "" {
 
@@ -123,13 +127,14 @@ var timeCompareCmd = &cobra.Command{
 			tz2 = tz2sur
 		}
 
-		tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
+		tzo1, tzo2, err, diff = command.CompareTime(tz1, tz2, hff)
 
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		fmt.Printf(misc.Cyan("The time in ") + misc.Blue(tz1) + ": " + tzo1 + " " + "\n" + misc.Blue("The time in ") + misc.Cyan(tz2) + ": " + tzo2 + "\n")
+		diffStr := str.Itoa(diff)
+		fmt.Printf(misc.Bold(misc.Cyan("The time in ")) + misc.Bold(misc.Blue(tz1)) + ": " + tzo1 + " " + "\n" + misc.Bold(misc.Blue("The time in ")) + misc.Bold(misc.Cyan(tz2)) + ": " + tzo2 + "\n")
 	},
 }
 

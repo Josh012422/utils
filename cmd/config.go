@@ -48,13 +48,6 @@ var cfgFiletype = []*sur.Question{
 		},
 		Validate: sur.Required,
 	},
-	{
-		Name: "set",
-		Prompt: &sur.Confirm{
-			Message: "Set default timezone now?",
-		},
-		Validate: sur.Required,
-	},
 }
 
 // configCmd represents the config command
@@ -73,10 +66,7 @@ var configCmd = &cobra.Command{
 
 		answers := struct {
 			Filetype string
-			Set      bool
 		}{}
-
-		timezone := ""
 
 		prompted := viper.GetBool("config.created")
 
@@ -104,18 +94,6 @@ var configCmd = &cobra.Command{
 			viper.Set("config.created", true)
 			viper.Set("config.filetype", filetype)
 			viper.WriteConfig()
-
-			tz := &sur.Input{
-				Message: "Default Timezone:",
-			}
-
-			if answers.Set == true {
-				_ = sur.AskOne(tz, &timezone)
-
-				viper.Set("default", timezone)
-				fmt.Println(misc.Green("✓ Succesfully saved default timezone"))
-			}
-
 		}
 
 
