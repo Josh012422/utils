@@ -69,14 +69,14 @@ $ pkg install make
 
 The '**_main_**' command is `gocharm`, there are currently eight commands (There will be more), a list:
 
-1. __time__
-2. __tasks__
-3. __config__
-4. __cron__
-5. __timer__
-6. __welcome__
-7. __random__
-8. __date__
+- __time__
+- __tasks__
+- __config__
+- __cron__
+- __timer__
+- __welcome__
+- __random__
+- __date__
 
 Each one with his own functionality.
 

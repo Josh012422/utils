@@ -96,6 +96,10 @@ var configCmd = &cobra.Command{
 				filetype = "yml"
 			}
 
+			viper.Set("config.created", true)
+			viper.Set("config.filetype", filetype)
+			viper.WriteConfig()
+
 			filetype = str.ToLower(answers.Filetype)
 
 			tz := &sur.Input{
@@ -120,6 +124,10 @@ var configCmd = &cobra.Command{
 		if success != true {
 			fmt.Println(misc.Red("Sorry there was an unexpected error"), create.GetErr())
 		}
+
+		viper.Set("config.created", true)
+		viper.Set("config.filetype", filetype)
+		viper.WriteConfig()
 
 		command.SetFt(filetype)
 

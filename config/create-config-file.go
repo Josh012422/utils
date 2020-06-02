@@ -46,6 +46,7 @@ func createFile(filetype string) bool {
 		fmt.Println(misc.Cyan("Config file created succesfully at"), misc.Green(path))
 		viper.Set("tasks.future_number", 1)
 		viper.Set("tasks.current_number", 0)
+		viper.WriteConfig()
 		os.Exit(0)
 		return true
 	}
