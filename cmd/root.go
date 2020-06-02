@@ -22,6 +22,9 @@ import (
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
+	sur "github.com/AlecAivazis/survey/v2"
+	"github.com/Josh012422/gocharm/commands"
+	"github.com/Josh012422/gocharm/misc"
 )
 
 var cfgFile string
@@ -30,7 +33,7 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "gocharm",
 	Short: "A multiple utilities cli",
-	Long: `This cli is made to make your life easier, you can use it from terminal, so if your a dev that is so busy to install an utilities app, thén this is for you
+	Long: `This cli is made to make your life easier, you can use it from terminal, so if your a dev that is so busy to install an utilities app, then this CLI is for you:
 
 	Example: gocharm time -t "Continent/City"
 	Displays the current time`,
@@ -87,5 +90,32 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		viper.ConfigFileUsed()
+	}
+
+	cfgFileExists := viper.Get("config.created")
+	if cfgFileExists != nil {
+		userLoggedIn := viper.GetBool("user_logged_in")
+
+		if userLoggedIn == false {
+			var createUserConfirm bool
+			fmt.Println(misc.Bold(misc.Red("FATAL: Error: No user found.")))
+
+			createUserQst := &sur.Confirm{
+				Message: "Create a new user now?",
+			}
+
+
+			_ = sur.AskOne(createUserQst, &createUserConfirm)
+			if createUserConfirm == true {
+				command.Create()
+				fmt.Println(misc.Bold(misc.Green("✓ Error is now fixed, Continue your action")))
+			}
+
+			if createUserConfirm == false {
+				fmt.Println(misc.Bold(misc.Red("Error is FATAL, Exiting...")))
+				os.Exit(1)
+				return
+			}
+		}
 	}
 }

@@ -25,6 +25,7 @@ import (
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	str "strconv"
 )
 
 // newCmd represents the new command
@@ -34,6 +35,7 @@ var timeCmd = &cobra.Command{
 	Long:  `This command uses the IANA timezone database, so is the REAL TIME`,
 	Run: func(cmd *cobra.Command, args []string) {
 		check := misc.Green("✓")
+		currUser := viper.GetString("user_current")
 		home, erro := homedir.Dir()
 		if erro != nil {
 			fmt.Println(erro)
@@ -50,9 +52,8 @@ var timeCmd = &cobra.Command{
 		defaultTzFlag, _ := cmd.Flags().GetString("default")
 
 		if defaultTzFlag != "" {
-
 			viper.AddConfigPath("..")
-			viper.Set("default", defaultTzFlag)
+			viper.Set("users."+currUser+".user.default_timezone", defaultTzFlag)
 			viper.WriteConfig()
 
 			fmt.Println(check, misc.Cyan("Default Timezone succesfully saved in:"), misc.Green(path))
@@ -71,7 +72,7 @@ var timeCmd = &cobra.Command{
 		}
 
 		if tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == false {
-			viperLocationRaw := viper.GetString("default")
+			viperLocationRaw := viper.GetString("users." + currUser + ".user.default_timezone")
 			viperLocation, _ := time.LoadLocation(viperLocationRaw)
 
 			t := time.Now().In(viperLocation)
@@ -80,7 +81,7 @@ var timeCmd = &cobra.Command{
 		}
 
 		if tzFlag == "" && defaultTzFlag == "" && hourFormatFlag == true {
-			viperLocationRaw := viper.GetString("default")
+			viperLocationRaw := viper.GetString("users." + currUser + ".user.default_timezone")
 			viperLocation, _ := time.LoadLocation(viperLocationRaw)
 
 			t := time.Now().In(viperLocation)
@@ -101,18 +102,13 @@ var timeCompareCmd = &cobra.Command{
 		hff, _ := cmd.Flags().GetBool("12hour")
 		tz1sur := ""
 		tz2sur := ""
-		var tzo1, tzo2 string
-		var err error
-		/*var errTz1 error;
-		var errTz2 error;*/
+		var (
+			tzo1, tzo2 string
+			err        error
+		)
+		var diff int
 
 		if tz1 == "" {
-			/*tz1, errTz1 = prompts.PromptTimezone1("Timezone 1")
-			tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
-			if errTz1 != nil {
-				fmt.Println(errTz1)
-				os.Exit(1)
-			}*/
 
 			tz1survey := &sur.Input{
 				Message: "Timezone 1:",
@@ -123,13 +119,6 @@ var timeCompareCmd = &cobra.Command{
 		}
 
 		if tz2 == "" {
-			/*tz2, errTz2 = prompts.PromptTimezone2("Timezone 2")
-			tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
-
-			if errTz2 != nil {
-				fmt.Println(errTz2)
-				os.Exit(1)
-			}*/
 			tz2survey := &sur.Input{
 				Message: "Timezone 2:",
 			}
@@ -138,13 +127,14 @@ var timeCompareCmd = &cobra.Command{
 			tz2 = tz2sur
 		}
 
-		tzo1, tzo2, err = command.ConvertTime(tz1, tz2, hff)
+		tzo1, tzo2, err, diff = command.CompareTime(tz1, tz2, hff)
 
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		fmt.Printf(misc.Cyan("The time in ") + misc.Blue(tz1) + ": " + tzo1 + " " + "\n" + misc.Blue("The time in ") + misc.Cyan(tz2) + ": " + tzo2 + "\n")
+		diffStr := str.Itoa(diff)
+		fmt.Printf(misc.Bold(misc.Cyan("The time in ")) + misc.Bold(misc.Blue(tz1)) + ": " + tzo1 + " " + "\n" + misc.Bold(misc.Blue("The time in ")) + misc.Bold(misc.Cyan(tz2)) + ": " + tzo2 + "\n")
 	},
 }
 
