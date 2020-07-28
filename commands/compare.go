@@ -9,13 +9,12 @@ import (
 	//	"github.com/spf13/viper"
 )
 
-func CompareTime(tz1 string, tz2 string, hourFormat bool) (string, string, error, int) {
+func CompareTime(tz1 string, tz2 string, hourFormat bool) (string, string, error) {
 	loc1raw := tz1
 	loc1, err1 := time.LoadLocation(loc1raw)
-	var difference int
 
 	if err1 != nil {
-		return "", "", err1, 0
+		return "", "", err1
 		os.Exit(1)
 	}
 
@@ -23,7 +22,7 @@ func CompareTime(tz1 string, tz2 string, hourFormat bool) (string, string, error
 	loc2, err2 := time.LoadLocation(loc2raw)
 
 	if err2 != nil {
-		return "", "", err2, 0
+		return "", "", err2
 		os.Exit(1)
 	}
 
@@ -36,9 +35,7 @@ func CompareTime(tz1 string, tz2 string, hourFormat bool) (string, string, error
 		t2.String()
 		//		t2.Format("3:04:05 PM")
 
-		difference = int(t1.UnixNano() - t2.UnixNano())
-
-		return t1.Format("3:04:05 PM"), t2.Format("3:04:05 PM"), nil, difference
+		return t1.Format("3:04:05 PM"), t2.Format("3:04:05 PM"), nil
 		os.Exit(0)
 	}
 
@@ -49,11 +46,9 @@ func CompareTime(tz1 string, tz2 string, hourFormat bool) (string, string, error
 		t2 := time.Now().In(loc2)
 		t2.String()
 
-		difference = int(t1.UnixNano() - t2.UnixNano())
-
-		return t1.Format("15:04:05 PM"), t2.Format("15:04:05 PM"), nil, difference
+		return t1.Format("15:04:05 PM"), t2.Format("15:04:05 PM"), nil
 		os.Exit(0)
 	}
 
-	return "", "", nil, 0
+	return "", "", nil
 }
