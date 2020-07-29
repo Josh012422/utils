@@ -68,7 +68,7 @@ func AddItem(content string, idRaw int) {
 
 	numberCurr := viper.GetInt(currUserTaskString + "." + "task." + id + "." + "items_current_number")
 
-	success := misc.Bold(misc.Green("Succesfully added new item to task number:"))
+	success := misc.Bold(misc.Green("Successfully added new item to task number:"))
 
 	taskExistsViper := viper.Get(currUserTaskString + "." + "task." + id)
 	var taskExists bool
@@ -112,7 +112,6 @@ func List() {
 	currUser := stri.ToLower(currUserUpper)
 	var currUserTaskString = "users." + currUser + ".user.tasks"
 	numberRaw := viper.GetInt(currUserTaskString + "." + tksCurrNumString)
-	fmt.Println(currUserTaskString + "." + tksCurrNumString)
 	numberStr := str.Itoa(numberRaw)
 
 	if numberRaw == 0 {
@@ -343,7 +342,7 @@ func Complete(id string) {
 	}
 
 	if existingTasks != false && taskAlreadyCompletedBool == true {
-		fmt.Println(misc.Green("Task already completed ;D"))
+		fmt.Println(misc.Green("✓ Task already completed ;D, Kudos!"))
 		return
 	}
 
